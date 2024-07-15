@@ -42,7 +42,7 @@ git fetch
 ```
 
 ```bash
-git pull origin master
+git pull origin main
 ```
 
 Após isso, basta seguir com o processo como se ja tivesse feito o clone do projeto a partir do processo nª 2.
