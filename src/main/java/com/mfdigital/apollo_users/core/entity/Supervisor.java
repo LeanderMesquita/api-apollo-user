@@ -16,12 +16,26 @@ import java.util.UUID;
 @Entity
 @Table(name = "Supervisor")
 public class Supervisor extends User{
+
     @Id
-    private UUID id_supervisor;
+    private final String id_supervisor;
     private Timestamp tma;
 
     public Supervisor(String name, String lastName, Sector sector, State state, UserRole userRole, Boolean isActive, String email, String password) {
         super(name, lastName, sector, state, userRole, isActive, email, password);
+        this.id_supervisor = super.id;
+    }
+
+    public String getId_supervisor() {
+        return id_supervisor;
+    }
+
+    public Timestamp getTma() {
+        return tma;
+    }
+
+    public void setTma(Timestamp tma) {
+        this.tma = tma;
     }
 
     @Override
@@ -54,11 +68,4 @@ public class Supervisor extends User{
         return state;
     }
 
-    public Timestamp getTma() {
-        return tma;
-    }
-
-    public void setTma(Timestamp tma) {
-        this.tma = tma;
-    }
 }
