@@ -4,7 +4,7 @@ import lombok.Data;
 
 import java.sql.Timestamp;
 
-@Data public class Collaborator {
+@Data public class Collaborator extends UserClass {
     Timestamp TMA;
 
 }
