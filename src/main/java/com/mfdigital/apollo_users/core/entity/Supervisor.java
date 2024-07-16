@@ -5,15 +5,19 @@ import com.mfdigital.apollo_users.core.entity.enums.State;
 import com.mfdigital.apollo_users.core.entity.enums.UserRole;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import org.springframework.data.annotation.Id;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "Supervisor")
 public class Supervisor extends User{
+    @Id
+    private UUID id_supervisor;
     private Timestamp tma;
 
     public Supervisor(String name, String lastName, Sector sector, State state, UserRole userRole, Boolean isActive, String email, String password) {
