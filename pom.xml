@@ -18,7 +18,29 @@
 		<license/>
 	</licenses>
 	<developers>
-		<developer/>
+		<developer>
+			<id>matheus.vieira</id>
+			<name>Matheus Vieira</name>
+			<email>matheusfont.123@gmail.com</email>
+		</developer>
+
+		<developer>
+			<id>matheus.ponte</id>
+			<name>Matheus Ponte</name>
+			<email>MatheusPonte894@gmail.com</email>
+		</developer>
+
+		<developer>
+			<id>leander.mesquita</id>
+			<name>Leander Mesquita</name>
+			<email>leander.lopes.mesquita@gmail.com</email>
+		</developer>
+
+		<developer>
+			<id>emanuel.ramos</id>
+			<name>Emanuel Ramos</name>
+			<email>emanuelramos20004@gmail.com</email>
+		</developer>
 	</developers>
 	<scm>
 		<connection/>
@@ -40,6 +62,51 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.7.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.12.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -50,5 +117,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
