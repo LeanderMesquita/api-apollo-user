@@ -1,9 +1,19 @@
 package com.mfdigital.apollo_users.core.entity.enums;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import org.springframework.data.annotation.Id;
+import java.util.UUID;
+
+@Entity
+@Table(name = "State")
 public enum State {
     CE("CE", "Ceará"),
     RJ("RJ", "Rio de Janeiro"),
     SP("SP", "São Paulo");
+
+    @Id
+    private UUID id_state;
 
     private final String uf;
     private final String description;
@@ -12,12 +22,4 @@ public enum State {
         this.uf = uf;
         this.description = description;
     }
-
-    public String getUf(){
-        return uf;
-    }
-    public String getDescription(){
-        return description;
-    }
-
 }
