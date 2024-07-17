@@ -4,8 +4,8 @@ import com.mfdigital.apollo_users.core.entity.enums.Sector;
 import com.mfdigital.apollo_users.core.entity.enums.State;
 import com.mfdigital.apollo_users.core.entity.enums.UserRole;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import org.springframework.data.annotation.Id;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.sql.Timestamp;
