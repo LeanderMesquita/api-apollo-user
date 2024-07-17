@@ -19,14 +19,14 @@ public class Collaborator extends User {
 
     private Timestamp tma;
     @Id
-    private final String id_collaborator;
+    private final String idCollaborator;
 
     public Collaborator(String name, String lastName, Sector sector, State state, UserRole userRole, Boolean isActive, String email, String password) {
         super(name, lastName, sector, state, userRole, isActive, email, password);
-        this.id_collaborator = super.id;
+        this.idCollaborator = super.id;
     }
 
-    public String getId_collaborator(){return id_collaborator;}
+    public String getId_collaborator(){return idCollaborator;}
     @Override
     public Collection<GrantedAuthority> getAutorization() {
         return List.of();
