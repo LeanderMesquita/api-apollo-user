@@ -2,32 +2,24 @@ package com.mfdigital.apollo_users.core.entity;
 
 import com.mfdigital.apollo_users.core.entity.enums.Sector;
 import com.mfdigital.apollo_users.core.entity.enums.State;
-import com.mfdigital.apollo_users.core.entity.enums.UserRole;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 
-
+@Data
 @Entity
 @Table(name = "Supervisor")
 public class Supervisor extends User{
 
-    @Id
-    private final String id_supervisor;
     private Timestamp tma;
 
-    public Supervisor(String name, String lastName, Sector sector, State state, UserRole userRole, Boolean isActive, String email, String password) {
-        super(name, lastName, sector, state, userRole, isActive, email, password);
-        this.id_supervisor = super.id;
-    }
-
-    public String getId_supervisor() {
-        return id_supervisor;
+    public Supervisor(String name, String lastName, Sector sector, State state, Boolean isActive, String email, String password) {
+        super(name, lastName, sector, state, isActive, email, password);
     }
 
     public Timestamp getTma() {
