@@ -3,29 +3,20 @@ package com.mfdigital.apollo_users.core.entity;
 
 import com.mfdigital.apollo_users.core.entity.enums.Sector;
 import com.mfdigital.apollo_users.core.entity.enums.State;
-import com.mfdigital.apollo_users.core.entity.enums.UserRole;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "Admin")
 public class Admin extends User{
 
-    @Id
-    private final String idAdmin;
-
-    public Admin(String name, String lastName, Sector sector, State state, UserRole userRole, Boolean isActive, String email, String password) {
-        super(name, lastName, sector, state, userRole, isActive, email, password);
-        this.idAdmin = super.id;
-    }
-
-    public String getIdAdmin(){
-        return idAdmin;
+    public Admin(String name, String lastName, Sector sector, State state, Boolean isActive, String email, String password) {
+        super(name, lastName, sector, state, isActive, email, password);
     }
 
     @Override
