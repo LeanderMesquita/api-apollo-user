@@ -32,6 +32,13 @@ public class Collaborator extends User {
         return List.of();
     }
 
+    public Timestamp getTma() {
+        return tma;
+    }
+    public void setTma(Timestamp tma) {
+        this.tma = tma;
+    }
+
     @Override
     public String getUserName() {
         return name + lastName;
