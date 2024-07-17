@@ -26,7 +26,7 @@ public class Collaborator extends User {
         this.id_collaborator = super.id;
     }
 
-    public String getId_collaborator(){return id_collaborator}
+    public String getId_collaborator(){return id_collaborator;}
     @Override
     public Collection<GrantedAuthority> getAutorization() {
         return List.of();
