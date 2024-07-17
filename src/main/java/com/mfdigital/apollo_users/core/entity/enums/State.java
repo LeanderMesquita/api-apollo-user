@@ -14,7 +14,7 @@ public enum State {
     SP("SP", "São Paulo");
 
     @Id
-    private UUID id_state;
+    private UUID idState;
 
     private final String uf;
     private final String description;

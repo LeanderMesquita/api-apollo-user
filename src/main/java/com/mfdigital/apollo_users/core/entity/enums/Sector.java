@@ -14,7 +14,7 @@ public enum Sector {
     QUALITY("quality");
 
     @Id
-    private UUID id_sector;
+    private UUID idSector;
 
     private final String sector;
 
