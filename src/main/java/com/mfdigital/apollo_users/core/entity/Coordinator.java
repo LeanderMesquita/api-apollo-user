@@ -4,8 +4,8 @@ import com.mfdigital.apollo_users.core.entity.enums.Sector;
 import com.mfdigital.apollo_users.core.entity.enums.State;
 import com.mfdigital.apollo_users.core.entity.enums.UserRole;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import org.springframework.data.annotation.Id;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
@@ -17,15 +17,15 @@ import java.util.UUID;
 public class Coordinator extends User{
 
     @Id
-    private final String id_coordinator;
+    private final String idCoordinator;
 
     public Coordinator(String name, String lastName, Sector sector, State state, UserRole userRole, Boolean isActive, String email, String password) {
         super(name, lastName, sector, state, userRole, isActive, email, password);
-        this.id_coordinator = super.id;
+        this.idCoordinator = super.id;
     }
 
-    public String getId_coordinator() {
-        return id_coordinator;
+    public String getIdCoordinator() {
+        return idCoordinator;
     }
 
     @Override
