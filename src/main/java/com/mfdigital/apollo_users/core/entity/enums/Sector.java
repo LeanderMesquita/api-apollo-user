@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 public enum Sector {
     TRIAGE("triage"),
     REGISTER("register"),
-    FULLFILLMENT("fullfillment"),
+    FULFILLMENT("fulfillment"),
     QUALITY("quality");
 
     @Id
