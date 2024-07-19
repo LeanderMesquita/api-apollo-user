@@ -39,8 +39,8 @@ public class CoordinatorService {
         Coordinator existingCoordinator = coordinatorRepository.findById(idCoordinator)
                 .orElseThrow(() -> new CoordinatorNotFoundException("Coordinator not found"));
 
-        existingCoordinator.setId(id);
-        existingCoordinator.setActive(false);
-        return coordinatorRepository.save(existingCoordinator);
+        updateCoordinator.setId(existingCoordinator.getId());
+        updateCoordinator.setActive(false);
+        return coordinatorRepository.save(updateCoordinator);
     }
 }
