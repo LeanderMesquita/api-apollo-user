@@ -4,10 +4,12 @@ import com.mfdigital.apollo_users.core.entity.Coordinator;
 import com.mfdigital.apollo_users.core.exceptions.CoordinatorNotFoundException;
 import com.mfdigital.apollo_users.core.repositories.CoordinatorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class CoordinatorService {
     private final Coordinator coordinator;
     private final CoordinatorRepository coordinatorRepository;
