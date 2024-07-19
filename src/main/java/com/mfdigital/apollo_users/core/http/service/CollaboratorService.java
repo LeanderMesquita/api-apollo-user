@@ -42,7 +42,7 @@ public class CollaboratorService {
         return  collaboratorRepository.save(collaborator);
     }
 
-    public Collaborator isActive(UUID id) {
+    public Collaborator inactivateCollaborator (UUID id) {
         Collaborator collaborator = collaboratorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Collaborator not found"));
         collaborator.setId(id);
         collaborator.setActive(false);
