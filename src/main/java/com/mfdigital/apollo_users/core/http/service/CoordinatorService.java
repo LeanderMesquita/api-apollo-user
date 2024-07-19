@@ -34,7 +34,7 @@ public class CoordinatorService {
         return coordinatorRepository.save(updateCoordinator);
     }
 
-    public Coordinator isActive(String id, Coordinator updateCoordinator) {
+    public Coordinator inactivateCoordinator(String id, Coordinator updateCoordinator) {
         UUID idCoordinator = UUID.fromString(id);
         Coordinator existingCoordinator = coordinatorRepository.findById(idCoordinator)
                 .orElseThrow(() -> new CoordinatorNotFoundException("Coordinator not found"));
