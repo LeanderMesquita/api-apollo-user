@@ -1,7 +1,9 @@
 package com.mfdigital.apollo_users.core.http.service;
 
 import com.mfdigital.apollo_users.core.entity.Collaborator;
+import com.mfdigital.apollo_users.core.entity.Coordinator;
 import com.mfdigital.apollo_users.core.repositories.CollaboratorRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -35,7 +37,14 @@ public class CollaboratorService {
 
         collaborator.setName(collaboratorDetails.getName());
         collaborator.setEmail(collaboratorDetails.getEmail());
+        collaborator.setActive(collaboratorDetails.getActive());
 
         return  collaboratorRepository.save(collaborator);
+    }
+
+    public Collaborator isActive(UUID id) {
+        Collaborator collaborator = collaboratorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Collaborator not found"));
+        collaborator.setActive(false);
+        return collaboratorRepository.save(collaborator);
     }
 }
