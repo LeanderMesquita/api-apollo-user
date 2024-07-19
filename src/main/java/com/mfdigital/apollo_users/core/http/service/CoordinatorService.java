@@ -43,4 +43,9 @@ public class CoordinatorService {
         updateCoordinator.setActive(false);
         return coordinatorRepository.save(updateCoordinator);
     }
+
+    public void deleteCoordinator(String id) {
+        UUID idCoordinator = UUID.fromString(id);
+        coordinatorRepository.deleteById(idCoordinator);
+    }
 }
