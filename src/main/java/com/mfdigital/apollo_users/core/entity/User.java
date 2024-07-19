@@ -13,7 +13,7 @@ import java.time.Instant;
 public abstract class User implements UserInterface {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected String id;
+    protected UUID id;
     @Column(nullable = false)
     protected String name;
     @Column(nullable = false)
@@ -42,7 +42,7 @@ public abstract class User implements UserInterface {
                 String email, 
                 String password) {
 
-        this.id = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID();
         this.name = name;
         this.lastName = lastName;
         this.sector = sector;
@@ -55,11 +55,11 @@ public abstract class User implements UserInterface {
 
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
