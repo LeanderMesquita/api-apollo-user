@@ -36,6 +36,14 @@ public class SupervisorService{
         return supervisorRepository.save(updatedSupervisor);
     }
 
+    public Supervisor inactivateSupervisor(UUID idSupervisor){
+        Supervisor supervisor = supervisorRepository.findById(idSupervisor)
+                .orElseThrow(()-> new EntityNotFoundException("Supervisor not found."));
+        supervisor.setId(idSupervisor);
+        supervisor.setActive(false);
+        return supervisorRepository.save(supervisor);
+    }
+
     public void deleteSupervisor(UUID idSupervisor){
         supervisorRepository.deleteById(idSupervisor);
     }
