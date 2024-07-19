@@ -38,7 +38,6 @@ public class CoordinatorService {
         UUID idCoordinator = UUID.fromString(id);
         Coordinator existingCoordinator = coordinatorRepository.findById(idCoordinator)
                 .orElseThrow(() -> new CoordinatorNotFoundException("Coordinator not found"));
-
         updateCoordinator.setId(existingCoordinator.getId());
         updateCoordinator.setActive(false);
         return coordinatorRepository.save(updateCoordinator);
