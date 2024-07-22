@@ -29,14 +29,16 @@ public class SupervisorService{
         return supervisorRepository.save(supervisor);
     }
 
-    public Supervisor updateSupervisor(UUID idSupervisor, Supervisor updatedSupervisor){
+    public Supervisor updateSupervisor(String id, Supervisor updatedSupervisor){
+        UUID idSupervisor = UUID.fromString(id);
         Supervisor existantSupervisor = supervisorRepository.findById(idSupervisor)
                 .orElseThrow(()-> new EntityNotFoundException("Supervisor not found."));
 
         return supervisorRepository.save(updatedSupervisor);
     }
 
-    public Supervisor inactivateSupervisor(UUID idSupervisor){
+    public Supervisor inactivateSupervisor(String id){
+        UUID idSupervisor = UUID.fromString(id);
         Supervisor supervisor = supervisorRepository.findById(idSupervisor)
                 .orElseThrow(()-> new EntityNotFoundException("Supervisor not found."));
         supervisor.setId(idSupervisor);
@@ -44,7 +46,8 @@ public class SupervisorService{
         return supervisorRepository.save(supervisor);
     }
 
-    public void deleteSupervisor(UUID idSupervisor){
+    public void deleteSupervisor(String id){
+        UUID idSupervisor = UUID.fromString(id);
         supervisorRepository.deleteById(idSupervisor);
     }
 }

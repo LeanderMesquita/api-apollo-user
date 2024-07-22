@@ -13,7 +13,7 @@ import java.util.UUID;
 @Service
 public class CollaboratorService {
 
-    private CollaboratorRepository collaboratorRepository;
+    private final CollaboratorRepository collaboratorRepository;
 
     @Autowired
     public CollaboratorService(CollaboratorRepository collaboratorRepository) {
@@ -24,7 +24,8 @@ public class CollaboratorService {
         return collaboratorRepository.findAll();
     }
 
-    public Optional<Collaborator>getCollaboratorById(UUID idCollaborator){
+    public Optional<Collaborator>getCollaboratorById(String id){
+        UUID idCollaborator = UUID.fromString(id);
         return collaboratorRepository.findById(idCollaborator);
     }
 
@@ -32,7 +33,8 @@ public class CollaboratorService {
         return collaboratorRepository.save(collaborator);
     }
 
-    public Collaborator updateCollaborator(UUID idCollaborator, Collaborator collaboratorDetails){
+    public Collaborator updateCollaborator(String id, Collaborator collaboratorDetails){
+        UUID idCollaborator = UUID.fromString(id);
         Collaborator collaborator = collaboratorRepository.findById(idCollaborator).orElseThrow();
 
         collaborator.setName(collaboratorDetails.getName());
@@ -42,9 +44,10 @@ public class CollaboratorService {
         return  collaboratorRepository.save(collaborator);
     }
 
-    public Collaborator inactivateCollaborator (UUID id) {
-        Collaborator collaborator = collaboratorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Collaborator not found"));
-        collaborator.setId(id);
+    public Collaborator inactivateCollaborator (String id) {
+        UUID idCollaborator = UUID.fromString(id);
+        Collaborator collaborator = collaboratorRepository.findById(idCollaborator).orElseThrow(() -> new EntityNotFoundException("Collaborator not found"));
+        collaborator.setId(idCollaborator);
         collaborator.setActive(false);
         return collaboratorRepository.save(collaborator);
     }
