@@ -17,25 +17,23 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/")
 public class SupervisorController {
-    private final SupervisorRepository supervisorRepository;
     private final SupervisorService supervisorService;
 
     @Autowired
-    public SupervisorController(SupervisorRepository supervisorRepository, SupervisorService supervisorService){
-        this.supervisorRepository = supervisorRepository;
+    public SupervisorController(SupervisorService supervisorService){
         this.supervisorService = supervisorService;
     }
 
     @GetMapping("/")
     public ResponseEntity<List<Supervisor>> getAllSupervisors() {
-        List<Supervisor> supervisors = supervisorRepository.findAll();
+        List<Supervisor> supervisors = supervisorService.getAllSupervisors();
         return new ResponseEntity<>(supervisors, HttpStatus.OK);
     }
 
     @GetMapping("/")
     public ResponseEntity<Supervisor> getSupervisorById(String id) {
         UUID idSupervisor = UUID.fromString(id);
-        Optional<Supervisor> supervisor = supervisorRepository.findById(idSupervisor);
+        Optional<Supervisor> supervisor = supervisorService.getSupervisorById(id);
         return supervisor.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
