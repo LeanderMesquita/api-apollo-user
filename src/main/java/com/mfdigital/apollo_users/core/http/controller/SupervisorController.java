@@ -32,7 +32,6 @@ public class SupervisorController {
 
     @GetMapping("/")
     public ResponseEntity<Supervisor> getSupervisorById(String id) {
-        UUID idSupervisor = UUID.fromString(id);
         Optional<Supervisor> supervisor = supervisorService.getSupervisorById(id);
         return supervisor.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
@@ -50,8 +49,8 @@ public class SupervisorController {
             Supervisor updateSupervisor = existingSupervisor.get();
             BeanUtils.copyProperties(supervisor, updateSupervisor, id);
 
-            Supervisor updatedSuepervisor = supervisorService.updateSupervisor(id, updateSupervisor);
-            return ResponseEntity.ok(updatedSuepervisor);
+            Supervisor updatedSupervisor = supervisorService.updateSupervisor(id, updateSupervisor);
+            return ResponseEntity.ok(updatedSupervisor);
         } else {
             return ResponseEntity.notFound().build();
         }
