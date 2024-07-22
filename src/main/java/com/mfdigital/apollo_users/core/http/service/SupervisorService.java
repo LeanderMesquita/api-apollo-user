@@ -1,6 +1,7 @@
 package com.mfdigital.apollo_users.core.http.service;
 
 
+import com.mfdigital.apollo_users.core.entity.Collaborator;
 import com.mfdigital.apollo_users.core.entity.Supervisor;
 import com.mfdigital.apollo_users.core.repositories.SupervisorRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,6 +24,11 @@ public class SupervisorService{
 
     public List<Supervisor> getAllSupervisors(){
         return supervisorRepository.findAll();
+    }
+
+    public Optional<Supervisor>getSupervisorById(String id){
+        UUID idSupervisor = UUID.fromString(id);
+        return supervisorRepository.findById(idSupervisor);
     }
 
     public Supervisor createSupervisor(Supervisor supervisor){
