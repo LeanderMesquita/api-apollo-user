@@ -1,19 +1,20 @@
 package com.mfdigital.apollo_users.core.http.service;
 
-import com.mfdigital.apollo_users.core.entity.Coordinator;
-import com.mfdigital.apollo_users.core.entity.Supervisor;
-import com.mfdigital.apollo_users.core.entity.Collaborator;
-import com.mfdigital.apollo_users.core.repositories.CoordinatorRepository;
-import com.mfdigital.apollo_users.core.repositories.SupervisorRepository;
-import com.mfdigital.apollo_users.core.repositories.CollaboratorRepository;
-import com.mfdigital.apollo_users.core.exceptions.CoordinatorNotFoundException;
-import com.mfdigital.apollo_users.core.exceptions.SupervisorNotFoundException;
-import com.mfdigital.apollo_users.core.exceptions.CollaboratorNotFoundException;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
+import com.mfdigital.apollo_users.core.entity.Collaborator;
+import com.mfdigital.apollo_users.core.entity.Coordinator;
+import com.mfdigital.apollo_users.core.entity.Supervisor;
+import com.mfdigital.apollo_users.core.exceptions.CollaboratorNotFoundException;
+import com.mfdigital.apollo_users.core.exceptions.SupervisorNotFoundException;
+import com.mfdigital.apollo_users.core.repositories.CollaboratorRepository;
+import com.mfdigital.apollo_users.core.repositories.CoordinatorRepository;
+import com.mfdigital.apollo_users.core.repositories.SupervisorRepository;
 
 
 @Service
@@ -51,20 +52,20 @@ public class AdminService {
 
     public Coordinator findCoordinatorById(String id) {
         UUID idCoordinator = UUID.fromString(id);
-        return coordinatorRepository.findById(idCoordinator)
-                .orElseThrow(() -> new CoordinatorNotFoundException("Coordinator not found"));
+        Optional<Coordinator> coordinatorOptional = coordinatorRepository.findById(idCoordinator);
+        return coordinatorOptional.get();
     }
 
     public Supervisor findSupervisorById(String id) {
         UUID idSupervisor = UUID.fromString(id);
-        return supervisorRepository.findById(idSupervisor)
-                .orElseThrow(() -> new SupervisorNotFoundException("Supervisor not found"));
+        Optional<Supervisor> supervisorOptional = supervisorRepository.findById(idSupervisor);
+        return supervisorOptional.get();
     }
 
     public Collaborator findCollaboratorById(String id) {
         UUID idCollaborator = UUID.fromString(id);
-        return collaboratorRepository.findById(idCollaborator)
-                .orElseThrow(() -> new CollaboratorNotFoundException("Collaborator not found"));
+        Optional<Collaborator> collaboratorOptional = collaboratorRepository.findById(idCollaborator);
+        return collaboratorOptional.get();
     }
 
     public Coordinator inactivateCoordinator(String id) {
