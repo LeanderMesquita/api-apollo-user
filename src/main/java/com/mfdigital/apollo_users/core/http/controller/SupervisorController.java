@@ -2,20 +2,17 @@ package com.mfdigital.apollo_users.core.http.controller;
 
 import com.mfdigital.apollo_users.core.entity.Supervisor;
 import com.mfdigital.apollo_users.core.http.service.SupervisorService;
-import com.mfdigital.apollo_users.core.repositories.SupervisorRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.beans.Beans;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/users/supervisor")
 public class SupervisorController {
     private final SupervisorService supervisorService;
 
@@ -24,30 +21,30 @@ public class SupervisorController {
         this.supervisorService = supervisorService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/view")
     public ResponseEntity<List<Supervisor>> getAllSupervisors() {
         List<Supervisor> supervisors = supervisorService.getAllSupervisors();
         return new ResponseEntity<>(supervisors, HttpStatus.OK);
     }
 
-    @GetMapping("/")
+    @GetMapping("/view/{id}")
     public ResponseEntity<Supervisor> getSupervisorById(String id) {
         Optional<Supervisor> supervisor = supervisorService.getSupervisorById(id);
         return supervisor.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/")
+    @PostMapping("/create")
     public ResponseEntity<Supervisor> createSupervisor(@RequestBody Supervisor supervisor) {
         Supervisor newSupervisor = supervisorService.createSupervisor(supervisor);
         return new ResponseEntity<>(newSupervisor, HttpStatus.OK);
     }
 
-    @PutMapping("/")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Supervisor> updateSupervisor(@PathVariable String id, @RequestBody Supervisor supervisor){
         Optional<Supervisor> existingSupervisor = supervisorService.getSupervisorById(id);
         if(existingSupervisor.isPresent()) {
             Supervisor updateSupervisor = existingSupervisor.get();
-            BeanUtils.copyProperties(supervisor, updateSupervisor, id);
+            BeanUtils.copyProperties(supervisor, updateSupervisor, "id", "status");
 
             Supervisor updatedSupervisor = supervisorService.updateSupervisor(id, updateSupervisor);
             return ResponseEntity.ok(updatedSupervisor);
@@ -56,11 +53,10 @@ public class SupervisorController {
         }
     }
 
-    @PutMapping("/")
+    @PutMapping("/status/{id}")
     public ResponseEntity<Supervisor> inactivateSupervisor(@PathVariable String id) {
         Supervisor inactivateSupervisor = supervisorService.inactivateSupervisor(id);
         return ResponseEntity.ok(inactivateSupervisor);
     }
-
 
 }
