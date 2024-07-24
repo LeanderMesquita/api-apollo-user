@@ -5,12 +5,17 @@ import com.mfdigital.apollo_users.core.entity.enums.Sector;
 import com.mfdigital.apollo_users.core.entity.enums.State;
 import com.mfdigital.apollo_users.core.entity.enums.UserRole;
 import jakarta.persistence.*;
-
+import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 import java.time.Instant;
 
-@MappedSuperclass
-public abstract class User implements UserInterface {
+@Data
+@Entity
+@Table(name="User")
+public class User implements UserInterface {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected UUID id;
@@ -111,6 +116,16 @@ public abstract class User implements UserInterface {
 
     public void setActive(Boolean active) {
         isActive = active;
+    }
+
+    @Override
+    public Collection<GrantedAuthority> getAutorization() {
+        return List.of();
+    }
+
+    @Override
+    public String getUserName() {
+        return getName() + " " + getLastName();
     }
 
     @Override
