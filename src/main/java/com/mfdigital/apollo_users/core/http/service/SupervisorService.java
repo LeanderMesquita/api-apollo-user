@@ -39,7 +39,7 @@ public class SupervisorService{
         UUID idSupervisor = UUID.fromString(id);
         Supervisor existantSupervisor = supervisorRepository.findById(idSupervisor)
                 .orElseThrow(()-> new EntityNotFoundException("Supervisor not found."));
-
+        updatedSupervisor.setId(existantSupervisor.getId());
         return supervisorRepository.save(updatedSupervisor);
     }
 
