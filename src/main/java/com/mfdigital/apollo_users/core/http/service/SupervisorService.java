@@ -52,8 +52,4 @@ public class SupervisorService{
         return supervisorRepository.save(supervisor);
     }
 
-    public void deleteSupervisor(String id){
-        UUID idSupervisor = UUID.fromString(id);
-        supervisorRepository.deleteById(idSupervisor);
-    }
 }
