@@ -1,13 +1,7 @@
 package com.mfdigital.apollo_users.core.http.service;
 
 import com.mfdigital.apollo_users.core.entity.Admin;
-import com.mfdigital.apollo_users.core.entity.Coordinator;
-import com.mfdigital.apollo_users.core.entity.Supervisor;
-import com.mfdigital.apollo_users.core.entity.Collaborator;
 import com.mfdigital.apollo_users.core.repositories.AdminRepository;
-import com.mfdigital.apollo_users.core.repositories.CoordinatorRepository;
-import com.mfdigital.apollo_users.core.repositories.SupervisorRepository;
-import com.mfdigital.apollo_users.core.repositories.CollaboratorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
