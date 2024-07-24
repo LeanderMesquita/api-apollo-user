@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -22,6 +23,11 @@ public class CoordinatorService {
 
     public List<Coordinator> getAllCoordinators() {
         return coordinatorRepository.findAll();
+    }
+
+    public Optional<Coordinator> getCoordinatorById(String id) {
+        UUID idCoordinator = UUID.fromString(id);
+        return coordinatorRepository.findById(idCoordinator);
     }
 
     public Coordinator createCoordinator(Coordinator coordinator) {

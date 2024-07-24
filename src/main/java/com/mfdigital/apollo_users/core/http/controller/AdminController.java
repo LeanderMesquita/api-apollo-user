@@ -44,15 +44,9 @@ public class AdminController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<Collaborator> getCollaboratorById(@PathVariable String id){
-        Collaborator getCollaboratorById = adminService.findCollaboratorById(id);
-        return ResponseEntity.ok(getCollaboratorById);
-    }
-
-    @GetMapping("/")
-    public ResponseEntity<Coordinator> getCoordnatorById(@PathVariable String id){
-        Coordinator getCoordnatorById = adminService.findCoordinatorById(id);
-        return ResponseEntity.ok(getCoordnatorById);
+    public ResponseEntity<Coordinator> findCoordenatorById(@PathVariable String id){
+        Coordinator getCoordenatorById = adminService.findCoordinatorById(id);
+        return ResponseEntity.ok(getCoordenatorById);
     }
 
     @GetMapping("/")
@@ -82,14 +76,14 @@ public class AdminController {
 
 
     @PutMapping("/")
-    public ResponseEntity<Coordinator> updateCoordenator(@PathVariable String id, @RequestBody Coordinator coordenator {
-        Coordinator existingCoordenator = adminService.inactivateCoordinator(id);
-        if (existingCoordenator.isPresent()){
-            Coordinator updateCoordenator = existingCoordenator.get();
-            BeanUtils.copyProperties(coordenator,updateCoordenator,"id");
+    public ResponseEntity<Admin> updateAdmin(@PathVariable String id, @RequestBody Admin admin {
+        Optional<Admin> existingAdmin = adminService.getAdminById(id);
+        if (existingAdmin.isPresent()){
+            Admin updateAdmin = existingAdmin.get();
+            BeanUtils.copyProperties(admin,updateAdmin,"id");
 
-            Coordinator updateCoordenator = adminService.updateCoordenator(id,updateCoordenator);
-            return ResponseEntity.ok(updateCoordenator);
+            Admin updateAdmin = adminService.updateAdmin(id,updateAdmin);
+            return ResponseEntity.ok(updateAdmin);
 
         }else {
             return ResponseEntity.notFound().build();
