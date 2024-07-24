@@ -12,12 +12,10 @@ import java.util.UUID;
 
 @Service
 public class CoordinatorService {
-    private final Coordinator coordinator;
     private final CoordinatorRepository coordinatorRepository;
 
     @Autowired
-    public CoordinatorService(Coordinator coordinator, CoordinatorRepository coordinatorRepository) {
-        this.coordinator = coordinator;
+    public CoordinatorService(CoordinatorRepository coordinatorRepository) {
         this.coordinatorRepository = coordinatorRepository;
     }
 
