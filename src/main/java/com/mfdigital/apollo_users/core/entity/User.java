@@ -5,16 +5,13 @@ import com.mfdigital.apollo_users.core.entity.enums.Sector;
 import com.mfdigital.apollo_users.core.entity.enums.State;
 import com.mfdigital.apollo_users.core.entity.enums.UserRole;
 import jakarta.persistence.*;
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import java.time.Instant;
 
-@Data
-@Entity
-@Table(name="User")
+@MappedSuperclass
 public class User implements UserInterface {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
