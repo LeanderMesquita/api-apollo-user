@@ -56,8 +56,8 @@ public class SupervisorController {
         }
     }
 
-    @DeleteMapping("/")
-    public ResponseEntity<Supervisor> inactivateSupervisor(String id) {
+    @PutMapping("/")
+    public ResponseEntity<Supervisor> inactivateSupervisor(@PathVariable String id) {
         Supervisor inactivateSupervisor = supervisorService.inactivateSupervisor(id);
         return ResponseEntity.ok(inactivateSupervisor);
     }
