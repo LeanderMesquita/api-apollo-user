@@ -6,9 +6,7 @@ import com.mfdigital.apollo_users.core.entity.Collaborator;
 import com.mfdigital.apollo_users.core.repositories.CoordinatorRepository;
 import com.mfdigital.apollo_users.core.repositories.SupervisorRepository;
 import com.mfdigital.apollo_users.core.repositories.CollaboratorRepository;
-import com.mfdigital.apollo_users.core.exceptions.CoordinatorNotFoundException;
-import com.mfdigital.apollo_users.core.exceptions.SupervisorNotFoundException;
-import com.mfdigital.apollo_users.core.exceptions.CollaboratorNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,19 +50,19 @@ public class AdminService {
     public Coordinator findCoordinatorById(String id) {
         UUID idCoordinator = UUID.fromString(id);
         return coordinatorRepository.findById(idCoordinator)
-                .orElseThrow(() -> new CoordinatorNotFoundException("Coordinator not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Coordinator not found"));
     }
 
     public Supervisor findSupervisorById(String id) {
         UUID idSupervisor = UUID.fromString(id);
         return supervisorRepository.findById(idSupervisor)
-                .orElseThrow(() -> new SupervisorNotFoundException("Supervisor not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Supervisor not found"));
     }
 
     public Collaborator findCollaboratorById(String id) {
         UUID idCollaborator = UUID.fromString(id);
         return collaboratorRepository.findById(idCollaborator)
-                .orElseThrow(() -> new CollaboratorNotFoundException("Collaborator not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Collaborator not found"));
     }
 
     public Coordinator inactivateCoordinator(String id) {

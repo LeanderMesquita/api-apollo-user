@@ -35,7 +35,7 @@ public class CollaboratorService {
 
     public Collaborator updateCollaborator(String id, Collaborator collaboratorDetails){
         UUID idCollaborator = UUID.fromString(id);
-        Collaborator collaborator = collaboratorRepository.findById(idCollaborator).orElseThrow();
+        Collaborator collaborator = collaboratorRepository.findById(idCollaborator).orElseThrow(() -> new EntityNotFoundException("Collaborator not found"));
 
         collaborator.setName(collaboratorDetails.getName());
         collaborator.setEmail(collaboratorDetails.getEmail());
