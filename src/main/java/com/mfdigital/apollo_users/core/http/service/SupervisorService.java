@@ -1,7 +1,4 @@
 package com.mfdigital.apollo_users.core.http.service;
-
-
-import com.mfdigital.apollo_users.core.entity.Collaborator;
 import com.mfdigital.apollo_users.core.entity.Supervisor;
 import com.mfdigital.apollo_users.core.repositories.SupervisorRepository;
 import jakarta.persistence.EntityNotFoundException;
