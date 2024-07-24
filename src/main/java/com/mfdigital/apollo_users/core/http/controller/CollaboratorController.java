@@ -53,8 +53,8 @@ public class CollaboratorController {
         }
     }
 
-    @DeleteMapping("/")
-    public ResponseEntity<Collaborator> inactivateCollaborator(String id){
+    @PutMapping("/")
+    public ResponseEntity<Collaborator> inactivateCollaborator(@PathVariable String id){
         Collaborator inactivateCollaborator = collaboratorService.inactivateCollaborator(id);
         return ResponseEntity.ok(inactivateCollaborator);
     }
