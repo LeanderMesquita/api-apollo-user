@@ -1,8 +1,10 @@
 package com.mfdigital.apollo_users.core.http.service;
 
+import com.mfdigital.apollo_users.core.entity.Admin;
 import com.mfdigital.apollo_users.core.entity.Coordinator;
 import com.mfdigital.apollo_users.core.entity.Supervisor;
 import com.mfdigital.apollo_users.core.entity.Collaborator;
+import com.mfdigital.apollo_users.core.repositories.AdminRepository;
 import com.mfdigital.apollo_users.core.repositories.CoordinatorRepository;
 import com.mfdigital.apollo_users.core.repositories.SupervisorRepository;
 import com.mfdigital.apollo_users.core.repositories.CollaboratorRepository;
@@ -11,93 +13,47 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
 @Service
 public class AdminService {
+
+    private final AdminRepository adminRepository;
+
     @Autowired
-    private CoordinatorRepository coordinatorRepository;
-    @Autowired
-    private SupervisorRepository supervisorRepository;
-    @Autowired
-    private CollaboratorRepository collaboratorRepository;
-
-    public List<Coordinator> getAllCoordinators() {
-        return coordinatorRepository.findAll();
+    public AdminService(AdminRepository adminRepository){
+        this.adminRepository = adminRepository;
     }
 
-    public List<Supervisor> getAllSupervisors() {
-        return supervisorRepository.findAll();
+    public List<Admin> getAllAdmins(){
+        return adminRepository.findAll();
     }
 
-    public List<Collaborator> getAllCollaborators() {
-        return collaboratorRepository.findAll();
+    public Optional<Admin> getAdminById(String id){
+        UUID idAdmin = UUID.fromString(id);
+        return adminRepository.findById(idAdmin);
     }
 
-    public Coordinator createCoordinator(Coordinator coordinator) {
-        return coordinatorRepository.save(coordinator);
+    public Admin create(Admin admin){
+        return adminRepository.save(admin);
     }
 
-    public Supervisor createSupervisor(Supervisor supervisor) {
-        return supervisorRepository.save(supervisor);
+    public Admin update(String id, Admin updatedAdmin){
+        UUID idAdmin = UUID.fromString(id);
+        Admin existantAdmin = adminRepository.findById(idAdmin)
+                .orElseThrow(() -> new EntityNotFoundException("Admin not found"));
+        updatedAdmin.setId(existantAdmin.getId());
+        return adminRepository.save(updatedAdmin);
     }
 
-    public Collaborator createCollaborator(Collaborator collaborator) {
-        return collaboratorRepository.save(collaborator);
-    }
-
-    public Coordinator findCoordinatorById(String id) {
-        UUID idCoordinator = UUID.fromString(id);
-        return coordinatorRepository.findById(idCoordinator)
-                .orElseThrow(() -> new EntityNotFoundException("Coordinator not found"));
-    }
-
-    public Supervisor findSupervisorById(String id) {
-        UUID idSupervisor = UUID.fromString(id);
-        return supervisorRepository.findById(idSupervisor)
-                .orElseThrow(() -> new EntityNotFoundException("Supervisor not found"));
-    }
-
-    public Collaborator findCollaboratorById(String id) {
-        UUID idCollaborator = UUID.fromString(id);
-        return collaboratorRepository.findById(idCollaborator)
-                .orElseThrow(() -> new EntityNotFoundException("Collaborator not found"));
-    }
-
-    public Coordinator inactivateCoordinator(String id) {
-        Coordinator existingCoordinator = findCoordinatorById(id);
-        existingCoordinator.setActive(false);
-        return coordinatorRepository.save(existingCoordinator);
-    }
-
-    public Supervisor inactivateSupervisor(String id) {
-        Supervisor existingSupervisor = findSupervisorById(id);
-        existingSupervisor.setActive(false);
-        return supervisorRepository.save(existingSupervisor);
-    }
-
-    public Collaborator inactivateCollaborator(String id) {
-        Collaborator existingCollaborator = findCollaboratorById(id);
-        existingCollaborator.setActive(false);
-        return collaboratorRepository.save(existingCollaborator);
-    }
-
-    public Coordinator activateCoordinator(String id) {
-        Coordinator existingCoordinator = findCoordinatorById(id);
-        existingCoordinator.setActive(true);
-        return coordinatorRepository.save(existingCoordinator);
-    }
-
-    public Supervisor activateSupervisor(String id) {
-        Supervisor existingSupervisor = findSupervisorById(id);
-        existingSupervisor.setActive(true);
-        return supervisorRepository.save(existingSupervisor);
-    }
-
-    public Collaborator activateCollaborator(String id) {
-        Collaborator existingCollaborator = findCollaboratorById(id);
-        existingCollaborator.setActive(true);
-        return collaboratorRepository.save(existingCollaborator);
+    public Admin inactivate(String id, Admin updatedAdmin){
+        UUID idAdmin = UUID.fromString(id);
+        Admin existantAdmin = adminRepository.findById(idAdmin)
+                .orElseThrow(() -> new EntityNotFoundException("Admin not found"));
+        updatedAdmin.setId(existantAdmin.getId());
+        updatedAdmin.setActive(false);
+        return adminRepository.save(updatedAdmin);
     }
 }
