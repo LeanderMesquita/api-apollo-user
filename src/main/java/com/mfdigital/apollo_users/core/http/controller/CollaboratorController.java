@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/users/collaborator")
 public class CollaboratorController {
     private final CollaboratorService collaboratorService;
 
@@ -21,30 +21,30 @@ public class CollaboratorController {
         this.collaboratorService = collaboratorService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/view")
     public ResponseEntity<List<Collaborator>> getAllCollaborators() {
         List<Collaborator> collaborators = collaboratorService.getAllCollborators();
         return new ResponseEntity<>(collaborators, HttpStatus.OK);
     }
 
-    @GetMapping("/")
+    @GetMapping("/view/{id}")
     public ResponseEntity<Collaborator> getCollaboratorById(@PathVariable String id){
         Optional<Collaborator> collaborator = collaboratorService.getCollaboratorById(id);
         return collaborator.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/")
+    @PostMapping("/create")
     public ResponseEntity<Collaborator> createCollaborator(@RequestBody Collaborator collaborator) {
         Collaborator newCollaborator = collaboratorService.createCollaborator(collaborator);
         return new ResponseEntity<>(newCollaborator, HttpStatus.OK);
     }
 
-    @PutMapping("/")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Collaborator> updateCollaborator(@PathVariable String id, @RequestBody Collaborator collaborator){
         Optional<Collaborator> existingCollaborator = collaboratorService.getCollaboratorById(id);
         if (existingCollaborator.isPresent()) {
             Collaborator updateCollaborator = existingCollaborator.get();
-            BeanUtils.copyProperties(collaborator, updateCollaborator, "id");
+            BeanUtils.copyProperties(collaborator, updateCollaborator, "id", "status");
 
             Collaborator updatedCollaborator = collaboratorService.updateCollaborator(id, updateCollaborator);
             return ResponseEntity.ok(updatedCollaborator);
@@ -53,10 +53,9 @@ public class CollaboratorController {
         }
     }
 
-    @DeleteMapping("/")
-    public ResponseEntity<Collaborator> inactivateCollaborator(String id){
+    @PutMapping("/status/{id}")
+    public ResponseEntity<Collaborator> inactivateCollaborator(@PathVariable String id){
         Collaborator inactivateCollaborator = collaboratorService.inactivateCollaborator(id);
         return ResponseEntity.ok(inactivateCollaborator);
     }
-
 }

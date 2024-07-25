@@ -1,7 +1,4 @@
 package com.mfdigital.apollo_users.core.http.service;
-
-
-import com.mfdigital.apollo_users.core.entity.Collaborator;
 import com.mfdigital.apollo_users.core.entity.Supervisor;
 import com.mfdigital.apollo_users.core.repositories.SupervisorRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -39,7 +36,7 @@ public class SupervisorService{
         UUID idSupervisor = UUID.fromString(id);
         Supervisor existantSupervisor = supervisorRepository.findById(idSupervisor)
                 .orElseThrow(()-> new EntityNotFoundException("Supervisor not found."));
-
+        updatedSupervisor.setId(existantSupervisor.getId());
         return supervisorRepository.save(updatedSupervisor);
     }
 
@@ -52,8 +49,4 @@ public class SupervisorService{
         return supervisorRepository.save(supervisor);
     }
 
-    public void deleteSupervisor(String id){
-        UUID idSupervisor = UUID.fromString(id);
-        supervisorRepository.deleteById(idSupervisor);
-    }
 }
