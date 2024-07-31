@@ -1,13 +1,16 @@
 package com.mfdigital.apollo_users.core.entity.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum UserRole {
-    COLLABORATOR ("colaborador"),
-    COORDINATOR ("coordenador"),
+    COLLABORATOR ("collaborator"),
+    COORDINATOR ("coordinator"),
     SUPERVISOR("supervisor"),
-    ADMIN ("administrador");
+    ADMIN ("administrator");
 
-    private final String type;
-    UserRole(String type) {this.type = type;}
+    private final String role;
 
-    public String getType() {return type;}
+    UserRole(String role){this.role = role;}
+
 }
