@@ -1,20 +1,13 @@
 package com.mfdigital.apollo_users.core.entity.enums;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
-import java.util.UUID;
+import lombok.Getter;
 
-@Entity
-@Table(name = "State")
+@Getter
 public enum State {
     CE("CE", "Ceará"),
     RJ("RJ", "Rio de Janeiro"),
     SP("SP", "São Paulo");
-
-    @Id
-    private UUID idState;
 
     private final String uf;
     private final String description;
