@@ -1,14 +1,16 @@
-package com.mfdigital.apollo_users.core.http.service;
+package com.mfdigital.apollo_users.core.http.services;
 
 import com.mfdigital.apollo_users.core.entity.User;
 import com.mfdigital.apollo_users.core.http.DTO.UserRequestDTO;
 import com.mfdigital.apollo_users.core.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class UserService {
 
     @Autowired
