@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -49,10 +50,11 @@ public class User implements UserDetails {
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
-    private Instant created_at;
+    private Instant createdAt;
 
+    @LastModifiedDate
     @Column(nullable = false)
-    private Instant updated_at;
+    private Instant updatedAt;
 
     public User (
             String name,
