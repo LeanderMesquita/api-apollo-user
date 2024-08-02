@@ -32,7 +32,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
         String path = request.getRequestURI();
-        if (path.equals("/auth/register")) {
+        if (path.equals("/auth/register") || path.equals("/auth/login")) {
             filterChain.doFilter(request, response);
             return;
         }
