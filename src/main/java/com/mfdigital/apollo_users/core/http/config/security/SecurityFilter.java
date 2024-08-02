@@ -31,7 +31,13 @@ public class SecurityFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
-        var token = this.recoverToken(request);
+        String path = request.getRequestURI();
+        if (path.equals("/auth/register")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        var token = recoverToken(request);
 
         if (token != null){
             var login = tokenService.validateToken(token);
@@ -46,7 +52,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     public String recoverToken(HttpServletRequest request){
         var authHeader = request.getHeader("Authorization");
-        if(authHeader == null) return "Token not provided or null";
-        return authHeader.replace("Bearer", "");
+        if(authHeader == null || !authHeader.startsWith("Bearer ")) return "Token not provided or null";
+        return authHeader.replace("Bearer", "").trim();
     }
 }
