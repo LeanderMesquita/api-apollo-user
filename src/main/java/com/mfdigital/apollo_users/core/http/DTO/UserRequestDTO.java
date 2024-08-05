@@ -24,7 +24,7 @@ public record UserRequestDTO(
         @Pattern(regexp = "^[A-Za-z0-9.]+@meirelesefreitas\\.adv\\.br$", message = "Email must end with '@meirelesefreitas.adv.br'.")
         String email,
         @NotNull
-        UserRole userRole,
+        UserRole role,
         @NotNull
         Boolean status,
         Instant tma
