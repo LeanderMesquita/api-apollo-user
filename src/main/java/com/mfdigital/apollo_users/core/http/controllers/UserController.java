@@ -2,6 +2,7 @@ package com.mfdigital.apollo_users.core.http.controllers;
 
 import com.mfdigital.apollo_users.core.entity.User;
 import com.mfdigital.apollo_users.core.http.DTO.UserRequestDTO;
+import com.mfdigital.apollo_users.core.http.DTO.UserStatusRequestDTO;
 import com.mfdigital.apollo_users.core.http.services.UserService;
 import com.mfdigital.apollo_users.core.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +41,8 @@ public class UserController {
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
-    @PatchMapping("/inactivate/{id}")
-    public ResponseEntity<User> inactivateUser (@PathVariable String id, @RequestBody UserRequestDTO request) {
+    @PatchMapping("/status/{id}")
+    public ResponseEntity<User> inactivateUser (@PathVariable String id, @RequestBody UserStatusRequestDTO request) {
         User user = userService.inactivateUser(id, request);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }

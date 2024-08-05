@@ -25,8 +25,6 @@ public record UserRequestDTO(
         String email,
         @NotNull
         UserRole role,
-        @NotNull
-        Boolean status,
         Instant tma
 ) {
 }

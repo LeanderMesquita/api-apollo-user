@@ -2,6 +2,7 @@ package com.mfdigital.apollo_users.core.http.services;
 
 import com.mfdigital.apollo_users.core.entity.User;
 import com.mfdigital.apollo_users.core.http.DTO.UserRequestDTO;
+import com.mfdigital.apollo_users.core.http.DTO.UserStatusRequestDTO;
 import com.mfdigital.apollo_users.core.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public class UserService {
         return userRepository.save(userToUpdate);
     }
 
-    public User inactivateUser(String id, UserRequestDTO userDetails) {
+    public User inactivateUser(String id, UserStatusRequestDTO userDetails) {
 
         User userToUpdate = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found."));
