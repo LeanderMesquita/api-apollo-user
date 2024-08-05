@@ -44,7 +44,7 @@ public class UserService {
         var sectorUpdateUser = userToUpdate.getSector().toString();
 
         validatorService.roleValidate(roleUpdateUser, roleAuthUser);
-        validatorService.sectorValidate(sectorUpdateUser, sectorAuthUser);
+        validatorService.sectorValidate(sectorUpdateUser, sectorAuthUser, roleAuthUser);
 
         userToUpdate.setUsername(userDetails.name()+ " "+userDetails.lastName());
         userToUpdate.setEmail(userDetails.email());
