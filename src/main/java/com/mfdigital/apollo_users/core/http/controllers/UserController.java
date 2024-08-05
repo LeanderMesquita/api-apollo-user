@@ -40,9 +40,9 @@ public class UserController {
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
-    @PutMapping("/inactive/{id}")
-    public ResponseEntity<User> inactivateUser (String id) {
-        User user = userService.inactivateUser(id);
+    @PatchMapping("/inactivate/{id}")
+    public ResponseEntity<User> inactivateUser (@PathVariable String id, @RequestBody UserRequestDTO request) {
+        User user = userService.inactivateUser(id, request);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

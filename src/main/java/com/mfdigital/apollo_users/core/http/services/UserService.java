@@ -5,12 +5,10 @@ import com.mfdigital.apollo_users.core.http.DTO.UserRequestDTO;
 import com.mfdigital.apollo_users.core.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -53,11 +51,22 @@ public class UserService {
         return userRepository.save(userToUpdate);
     }
 
-    public User inactivateUser(String id) {
-        User user = userRepository.findById(id)
+    public User inactivateUser(String id, UserRequestDTO userDetails) {
+
+        User userToUpdate = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found."));
 
-        user.setStatus(false);
-        return userRepository.save(user);
+        User authUserWhoRequestingChange = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        var roleAuthUser = authUserWhoRequestingChange.getUserRole().toString();
+        var roleUpdateUser = userToUpdate.getUserRole().toString();
+
+        var sectorAuthUser = authUserWhoRequestingChange.getSector().toString();
+        var sectorUpdateUser = userToUpdate.getSector().toString();
+
+        validatorService.roleValidate(roleUpdateUser, roleAuthUser);
+        validatorService.sectorValidate(sectorUpdateUser, sectorAuthUser, roleAuthUser);
+
+        userToUpdate.setStatus(userDetails.status());
+        return userRepository.save(userToUpdate);
     }
 }
