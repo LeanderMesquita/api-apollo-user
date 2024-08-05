@@ -5,6 +5,7 @@ import com.mfdigital.apollo_users.core.http.DTO.UserRequestDTO;
 import com.mfdigital.apollo_users.core.http.DTO.UserStatusRequestDTO;
 import com.mfdigital.apollo_users.core.http.services.UserService;
 import com.mfdigital.apollo_users.core.repositories.UserRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,13 +37,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "/update/{id}", method = {RequestMethod.PATCH, RequestMethod.PUT})
-    public ResponseEntity<User> updateProfile(@PathVariable String id, @RequestBody UserRequestDTO request) {
+    public ResponseEntity<User> updateProfile(@PathVariable String id, @RequestBody @Valid UserRequestDTO request) {
         User updatedUser = userService.updateUser(id, request);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
     @PatchMapping("/status/{id}")
-    public ResponseEntity<User> inactivateUser (@PathVariable String id, @RequestBody UserStatusRequestDTO request) {
+    public ResponseEntity<User> inactivateUser (@PathVariable String id, @RequestBody @Valid UserStatusRequestDTO request) {
         User user = userService.inactivateUser(id, request);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
