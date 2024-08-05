@@ -20,39 +20,25 @@ import java.io.IOException;
 public class SecurityFilter extends OncePerRequestFilter {
 
     @Autowired
-    TokenService tokenService;
-    @Autowired
     UserRepository userRepository;
-
+    @Autowired
+    TokenService tokenService;
 
     @Override
-    protected void doFilterInternal(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain filterChain
-    ) throws ServletException, IOException {
-        String path = request.getRequestURI();
-        if (path.equals("/auth/register") || path.equals("/auth/login")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        var token = recoverToken(request);
-
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        var token = this.recoverToken(request);
         if (token != null){
             var login = tokenService.validateToken(token);
             UserDetails user = userRepository.findByEmail(login);
             var auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
-
         filterChain.doFilter(request, response);
-
     }
 
-    public String recoverToken(HttpServletRequest request){
+    private String recoverToken(HttpServletRequest request){
         var authHeader = request.getHeader("Authorization");
-        if(authHeader == null || !authHeader.startsWith("Bearer ")) return "Token not provided or null";
-        return authHeader.replace("Bearer", "").trim();
+        if (authHeader == null) return null;
+        return authHeader.replace("Bearer ", "");
     }
 }

@@ -35,6 +35,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/users/profile/{id}").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/users/update/{id}").hasAnyRole("ADMIN", "COORDINATOR", "SUPERVISOR")
                         .requestMatchers(HttpMethod.PATCH, "/users/update/{id}").hasAnyRole("ADMIN", "COORDINATOR", "SUPERVISOR")
+                        .requestMatchers(HttpMethod.PATCH, "/users/status/{id}").hasAnyRole("ADMIN", "COORDINATOR")
                         .anyRequest().authenticated()
                 ).addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class).build();
 
