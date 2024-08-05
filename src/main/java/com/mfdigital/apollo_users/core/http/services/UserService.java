@@ -17,6 +17,9 @@ import java.util.Optional;
 public class UserService {
 
     @Autowired
+    private ValidatorService validatorService;
+
+    @Autowired
     private UserRepository userRepository;
 
     public List<User> getAllUsers() {
@@ -40,23 +43,13 @@ public class UserService {
         var sectorAuthUser = authUserWhoRequestingChange.getSector().toString();
         var sectorUpdateUser = userToUpdate.getSector().toString();
 
-        if(!Objects.equals(sectorAuthUser, sectorUpdateUser)){
-            throw new AccessDeniedException("You can only update users with the same sector");
-        }
-
-
-        if (
-                (roleUpdateUser.equals("ADMIN") || roleUpdateUser.equals("COORDINATOR"))
-                        &&
-                (roleAuthUser.equals("COORDINATOR") || roleAuthUser.equals("SUPERVISOR"))
-        )
-        {
-            throw new AccessDeniedException("Coordinators or supervisor cannot update admin users");
-        }
-
-
+        validatorService.roleValidate(roleUpdateUser, roleAuthUser);
+        validatorService.sectorValidate(sectorUpdateUser, sectorAuthUser);
 
         userToUpdate.setUsername(userDetails.name()+ " "+userDetails.lastName());
+        userToUpdate.setEmail(userDetails.email());
+        userToUpdate.setUserRole(userDetails.role());
+
         return userRepository.save(userToUpdate);
     }
 
