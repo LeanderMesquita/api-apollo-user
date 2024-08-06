@@ -18,7 +18,7 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000")
+                        .allowedOrigins("http://localhost:3001")
                         .allowedHeaders(HttpHeaders.CONTENT_TYPE, "X-CSRF-TOKEN")
                         .allowedMethods(
                                 HttpMethod.GET.name(),
