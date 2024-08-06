@@ -15,7 +15,7 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("https://c904-186-225-54-221.ngrok-free.app:3001");
+        config.addAllowedOrigin("http://192.168.3.113:3000");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
 
