@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -22,6 +23,9 @@ public class SecurityConfig {
 
     @Autowired
     SecurityFilter securityFilter;
+
+    @Autowired
+    CorsFilter corsFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
@@ -37,7 +41,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PATCH, "/users/update/{id}").hasAnyRole("ADMIN", "COORDINATOR", "SUPERVISOR")
                         .requestMatchers(HttpMethod.PATCH, "/users/status/{id}").hasAnyRole("ADMIN", "COORDINATOR")
                         .anyRequest().authenticated()
-                ).addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class).build();
+                )
+                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class).build();
 
     }
 

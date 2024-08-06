@@ -13,19 +13,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig {
 
     @Bean
-    public WebMvcConfigurer cors() {
+    public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3001")
-                        .allowedHeaders(HttpHeaders.CONTENT_TYPE, "X-CSRF-TOKEN")
-                        .allowedMethods(
-                                HttpMethod.GET.name(),
-                                HttpMethod.POST.name(),
-                                HttpMethod.PATCH.name(),
-                                HttpMethod.PUT.name(),
-                                HttpMethod.DELETE.name())
+                        .allowedOrigins("https://c904-186-225-54-221.ngrok-free.app:3001")
+                        .allowedMethods("*")
+                        .allowedHeaders("*")
                         .allowCredentials(true);
             }
         };
