@@ -44,8 +44,13 @@ public class User implements UserDetails {
     private Instant tma;
 
     @Setter
+    @Enumerated(EnumType.STRING)
     private UserRole userRole;
+
+    @Enumerated(EnumType.STRING)
     private State state;
+
+    @Enumerated(EnumType.STRING)
     private Sector sector;
 
     @CreatedDate
