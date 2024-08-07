@@ -62,7 +62,8 @@ public class AuthController {
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
 
         Optional<User> existingUserWithAdminRole = userRepository.findByUserRole(UserRole.ADMIN);
-        if (existingUserWithAdminRole.isPresent()) {
+
+        if (existingUserWithAdminRole.isPresent() && data.role().toString().equals("ADMIN")) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Only one admin user is allowed on the system.");
         }
 
