@@ -27,8 +27,8 @@ public record RegisterDTO(
 
         @NotBlank(message = "Password cannot be blank")
         @Pattern(
-                regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
-                message = "Password must contain at least one lowercase character, one uppercase character, one special character, and must be at least 8 characters long"
+                regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%¨|&*()_+=;:?.^])[A-Za-z\\d!@#$%¨|&*()_+=;:?.^]{8,}$",
+                message = "Password must contain at least one lowercase character, one uppercase character, one special character, one number, and must be at least 8 characters long"
         )
         String password,
 
