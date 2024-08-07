@@ -46,8 +46,9 @@ public class UserService {
         validatorService.sectorValidate(sectorUpdateUser, sectorAuthUser, roleAuthUser);
 
         userToUpdate.setUsername(userDetails.name()+ " "+userDetails.lastName());
-        userToUpdate.setEmail(userDetails.email());
         userToUpdate.setUserRole(userDetails.role());
+        userToUpdate.setState(userDetails.state());
+        userToUpdate.setSector(userDetails.sector());
 
         return userRepository.save(userToUpdate);
     }
