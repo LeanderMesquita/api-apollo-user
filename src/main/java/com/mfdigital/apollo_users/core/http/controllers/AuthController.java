@@ -34,10 +34,15 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid AuthDTO data){
         try {
+            User user = (User) userRepository.findByEmail(data.email());
             var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
             var auth = this.authenticationManager.authenticate(usernamePassword);
             var token = tokenService.generateToken((User) auth.getPrincipal());
-            return ResponseEntity.ok(new LoginDTO(token));
+            return ResponseEntity.ok(new LoginDTO(token,
+                    user.getUsername(),
+                    user.getUserRole(),
+                    user.getSector(),
+                    user.getState()));
         } catch (AuthenticationException exception) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect or invalid credentials.");
         }
