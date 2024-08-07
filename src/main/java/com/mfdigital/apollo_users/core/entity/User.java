@@ -45,7 +45,9 @@ public class User implements UserDetails {
 
     @Setter
     private UserRole userRole;
+    @Setter
     private State state;
+    @Setter
     private Sector sector;
 
     @CreatedDate
