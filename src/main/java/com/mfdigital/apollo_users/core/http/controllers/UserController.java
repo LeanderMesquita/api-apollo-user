@@ -38,9 +38,11 @@ public class UserController {
     }
 
     @GetMapping("/profile/{id}")
-    public ResponseEntity<User> getUserById(String id) {
-        Optional<User> user = userService.getUserById(id);
-        return user.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable String id) {
+
+        return userRepository.findById(id).map(user -> new ResponseEntity<>(new UserResponseDTO(user), HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+
     }
 
     @RequestMapping(value = "/update/{id}", method = {RequestMethod.PATCH, RequestMethod.PUT})

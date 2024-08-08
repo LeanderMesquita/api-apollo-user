@@ -1,10 +1,7 @@
 package com.mfdigital.apollo_users.core.http.DTO;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.mfdigital.apollo_users.core.entity.User;
-import com.mfdigital.apollo_users.core.entity.enums.Sector;
 import com.mfdigital.apollo_users.core.entity.enums.State;
-import com.mfdigital.apollo_users.core.entity.enums.UserRole;
 
 public record UserResponseDTO(
         String id,
