@@ -13,28 +13,7 @@ import java.util.Objects;
 public class ValidatorService {
 
 
-    private AuthUserDetails authUserDetails;
-
-    public static class AuthUserDetails{
-        User authUserWhoRequestingChange = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        public String roleAuthUser(){
-            return authUserWhoRequestingChange.getUserRole().toString();
-        }
-
-        public String sectorAuthUser() {
-            return authUserWhoRequestingChange.getSector().toString();
-        }
-
-        public String stateAuthUser() {
-            return authUserWhoRequestingChange.getState().toString();
-        }
-    }
-
-
-    public void roleValidate(String roleUpdateUser){
-
-        String roleAuthUser = authUserDetails.roleAuthUser();
+    public void roleValidate(String roleUpdateUser, String roleAuthUser){
 
         if(roleAuthUser.equals("COLLABORATOR")){
             throw new AccessDeniedException("Collaborators cannot update others users");
@@ -55,20 +34,15 @@ public class ValidatorService {
         }
     }
 
-    public void sectorValidate(String sectorUpdateUser){
+    public void sectorValidate(String sectorUpdateUser, String sectorAuthUser, String roleAuthUser){
 
-        String roleAuthUser = authUserDetails.roleAuthUser();
-        String sectorAuthUser = authUserDetails.sectorAuthUser();
 
         if(!Objects.equals(sectorAuthUser, sectorUpdateUser) && !Objects.equals(roleAuthUser, "ADMIN")){
             throw new AccessDeniedException("You can only update users with the same sector");
         }
     }
 
-    public void stateValidate(String stateUpdateUser){
-
-        String roleAuthUser = authUserDetails.roleAuthUser();
-        String stateAuthUser = authUserDetails.stateAuthUser();
+    public void stateValidate(String stateUpdateUser, String stateAuthUser, String roleAuthUser){
 
         if(!Objects.equals(stateAuthUser, stateUpdateUser) && ((!Objects.equals(roleAuthUser, "ADMIN") || !Objects.equals(roleAuthUser, "COORDINATOR") ))){
             throw new AccessDeniedException("You can only update users with the same sector");

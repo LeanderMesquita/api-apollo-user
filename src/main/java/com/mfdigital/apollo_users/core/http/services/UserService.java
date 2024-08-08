@@ -35,14 +35,19 @@ public class UserService {
         User userToUpdate = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found."));
 
+        User authUserWhoRequestingChange = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        var roleAuthUser = authUserWhoRequestingChange.getUserRole().toString();
+        var sectorAuthUser = authUserWhoRequestingChange.getSector().toString();
+        var stateAuthUser = authUserWhoRequestingChange.getState().toString();
 
         var roleUpdateUser = userToUpdate.getUserRole().toString();
         var sectorUpdateUser = userToUpdate.getSector().toString();
         var stateUpdateUser = userToUpdate.getState().toString();
 
-        validatorService.roleValidate(roleUpdateUser);
-        validatorService.sectorValidate(sectorUpdateUser);
-        validatorService.stateValidate(stateUpdateUser);
+        validatorService.roleValidate(roleUpdateUser, roleAuthUser);
+        validatorService.sectorValidate(sectorUpdateUser, sectorAuthUser, roleAuthUser);
+        validatorService.stateValidate(stateUpdateUser, stateAuthUser, roleAuthUser);
 
         userToUpdate.setUsername(userDetails.name()+ " "+userDetails.lastName());
         userToUpdate.setUserRole(userDetails.role());
@@ -57,14 +62,18 @@ public class UserService {
         User userToUpdate = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found."));
 
+        User authUserWhoRequestingChange = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        var roleAuthUser = authUserWhoRequestingChange.getUserRole().toString();
+        var sectorAuthUser = authUserWhoRequestingChange.getSector().toString();
+        var stateAuthUser = authUserWhoRequestingChange.getState().toString();
 
         var roleUpdateUser = userToUpdate.getUserRole().toString();
         var sectorUpdateUser = userToUpdate.getSector().toString();
         var stateUpdateUser = userToUpdate.getState().toString();
 
-        validatorService.roleValidate(roleUpdateUser);
-        validatorService.sectorValidate(sectorUpdateUser);
-        validatorService.stateValidate(stateUpdateUser);
+        validatorService.roleValidate(roleUpdateUser, roleAuthUser);
+        validatorService.sectorValidate(sectorUpdateUser, sectorAuthUser, roleAuthUser);
+        validatorService.stateValidate(stateUpdateUser, stateAuthUser, roleAuthUser);
 
         userToUpdate.setStatus(userDetails.status());
         return userRepository.save(userToUpdate);
