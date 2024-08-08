@@ -2,6 +2,7 @@ package com.mfdigital.apollo_users.core.http.controllers;
 
 import com.mfdigital.apollo_users.core.entity.User;
 import com.mfdigital.apollo_users.core.http.DTO.UserRequestDTO;
+import com.mfdigital.apollo_users.core.http.DTO.UserResponseDTO;
 import com.mfdigital.apollo_users.core.http.DTO.UserStatusRequestDTO;
 import com.mfdigital.apollo_users.core.http.services.UserService;
 import com.mfdigital.apollo_users.core.repositories.UserRepository;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("users")
@@ -25,12 +27,17 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/view")
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
         List<User> users = userRepository.findAll();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+
+        List<UserResponseDTO> userResponseDTOs = users.stream()
+                .map(UserResponseDTO::new)
+                .toList();
+
+        return new ResponseEntity<>(userResponseDTOs, HttpStatus.OK);
     }
 
-    @GetMapping("/view/{id}")
+    @GetMapping("/profile/{id}")
     public ResponseEntity<User> getUserById(String id) {
         Optional<User> user = userService.getUserById(id);
         return user.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());

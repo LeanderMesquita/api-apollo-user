@@ -5,10 +5,10 @@ import lombok.Getter;
 
 @Getter
 public enum Sector {
-    TRIAGE("triage"),
-    REGISTER("register"),
-    FULFILLMENT("fulfillment"),
-    QUALITY("quality");
+    TRIAGE("Triagem"),
+    REGISTER("Cadastro"),
+    FULFILLMENT("Cumprimento"),
+    QUALITY("Qualidade");
 
     private final String sector;
 
