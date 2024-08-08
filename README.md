@@ -3,7 +3,7 @@ padrões de Branch 📜
 ### Caso não possua o projeto na máquina
 1.
 ```bash
-git clone https://github.com/unifor-team/university-api.git
+git clone 
 ```
 
 2. Após concluir a clonagem do projeto, irão utilizar o comando abaixo para criar uma "nova" ramificação do projeto principal.
