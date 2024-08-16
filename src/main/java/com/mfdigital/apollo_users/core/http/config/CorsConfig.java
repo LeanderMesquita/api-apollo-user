@@ -14,16 +14,19 @@ public class CorsConfig {
     private String allowedIp1;
     @Value("${allowed.ip2}")
     private String allowedIp2;
-
+    @Value("${ngrok.url}")
+    private String ngrokUrl;
 
     @Bean
     public CorsFilter corsFilter() {
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowCredentials(true);
         config.addAllowedOrigin(allowedIp1);
         config.addAllowedOrigin(allowedIp2);
+        config.addAllowedOrigin(ngrokUrl);
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
 

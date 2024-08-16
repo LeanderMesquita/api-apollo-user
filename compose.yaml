@@ -1,3 +1,8 @@
+
+networks:
+  apollo:
+    driver: bridge
+
 services:
   db_apollo_users:
     image: 'postgres:latest'
@@ -7,12 +12,16 @@ services:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
     ports:
       - "5432:5432"
+    networks:
+      - apollo
 
   apollo_users:
     build:
       context: .
     ports:
       - "${SERVER_PORT}:${SERVER_PORT}"
+    networks:
+      - apollo
     depends_on:
       - db_apollo_users
     env_file:
@@ -26,4 +35,7 @@ services:
       - SPRING_JPA_PROPERTIES_HIBERNATE_JDBC_LAB_NAN_CONTEXTUAL_CREATION=true
       - SERVER_PORT=${SERVER_PORT}
       - API_SECURITY_TOKEN_SECRET=${JWT_SECRET}
+      - ALLOWED_IP1=${ALLOWED_IP1}
+      - ALLOWED_IP2=${ALLOWED_IP2}
+      - NGROK_URL=${NGROK_URL}
 
