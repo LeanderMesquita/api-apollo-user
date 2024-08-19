@@ -1,12 +1,17 @@
 package com.mfdigital.apollo_users.core.http.services;
 
+import com.mfdigital.apollo_users.core.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
 @Component
 public class ValidatorService {
+
 
     public void roleValidate(String roleUpdateUser, String roleAuthUser){
 
@@ -17,7 +22,7 @@ public class ValidatorService {
         if (
                 (roleUpdateUser.equals("ADMIN") || roleUpdateUser.equals("COORDINATOR"))
                         &&
-                        (roleAuthUser.equals("COORDINATOR") || roleAuthUser.equals("SUPERVISOR"))
+                (roleAuthUser.equals("COORDINATOR") || roleAuthUser.equals("SUPERVISOR"))
         )
         {
             throw new AccessDeniedException("Coordinators or supervisor cannot update admin or coordinator users");
@@ -30,7 +35,16 @@ public class ValidatorService {
     }
 
     public void sectorValidate(String sectorUpdateUser, String sectorAuthUser, String roleAuthUser){
+
+
         if(!Objects.equals(sectorAuthUser, sectorUpdateUser) && !Objects.equals(roleAuthUser, "ADMIN")){
+            throw new AccessDeniedException("You can only update users with the same sector");
+        }
+    }
+
+    public void stateValidate(String stateUpdateUser, String stateAuthUser, String roleAuthUser){
+
+        if(!Objects.equals(stateAuthUser, stateUpdateUser) && ((!Objects.equals(roleAuthUser, "ADMIN") || !Objects.equals(roleAuthUser, "COORDINATOR") ))){
             throw new AccessDeniedException("You can only update users with the same sector");
         }
     }

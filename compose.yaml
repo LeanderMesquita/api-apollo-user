@@ -1,0 +1,41 @@
+
+networks:
+  apollo:
+    driver: bridge
+
+services:
+  db_apollo_users:
+    image: 'postgres:latest'
+    environment:
+      - POSTGRES_DB=${DB_APP_NAME}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    networks:
+      - apollo
+
+  apollo_users:
+    build:
+      context: .
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    networks:
+      - apollo
+    depends_on:
+      - db_apollo_users
+    env_file:
+      - .env
+    environment:
+      - SPRING_DATASOURCE_URL=${DB_URL}
+      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - SPRING_DATASOURCE_URL=${DB_URL}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=${DB_HIBERNATE_DDL_AUTO}
+      - SPRING_JPA_PROPERTIES_HIBERNATE_JDBC_LAB_NAN_CONTEXTUAL_CREATION=true
+      - SERVER_PORT=${SERVER_PORT}
+      - API_SECURITY_TOKEN_SECRET=${JWT_SECRET}
+      - ALLOWED_IP1=${ALLOWED_IP1}
+      - ALLOWED_IP2=${ALLOWED_IP2}
+      - NGROK_URL=${NGROK_URL}
+

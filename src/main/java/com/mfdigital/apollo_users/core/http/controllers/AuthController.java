@@ -1,8 +1,9 @@
 package com.mfdigital.apollo_users.core.http.controllers;
 
 import com.mfdigital.apollo_users.core.entity.User;
+import com.mfdigital.apollo_users.core.entity.enums.UserRole;
 import com.mfdigital.apollo_users.core.http.DTO.AuthDTO;
-import com.mfdigital.apollo_users.core.http.DTO.LoginDTO;
+import com.mfdigital.apollo_users.core.http.DTO.LoginResponseDTO;
 import com.mfdigital.apollo_users.core.http.DTO.RegisterDTO;
 import com.mfdigital.apollo_users.core.http.services.TokenService;
 import com.mfdigital.apollo_users.core.repositories.UserRepository;
@@ -18,6 +19,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("auth")
@@ -38,7 +42,7 @@ public class AuthController {
             var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
             var auth = this.authenticationManager.authenticate(usernamePassword);
             var token = tokenService.generateToken((User) auth.getPrincipal());
-            return ResponseEntity.ok(new LoginDTO(token,
+            return ResponseEntity.ok(new LoginResponseDTO(token,
                     user.getUsername(),
                     user.getUserRole(),
                     user.getSector(),
@@ -56,6 +60,12 @@ public class AuthController {
         if(this.userRepository.findByEmail(email) != null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User with email " + email + " already exists");
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
+
+        Optional<User> existingUserWithAdminRole = userRepository.findByUserRole(UserRole.ADMIN);
+
+        if (existingUserWithAdminRole.isPresent() && data.role().toString().equals("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Only one admin user is allowed on the system.");
+        }
 
         User newUser = new User(
                 data.name(),
