@@ -1,13 +1,7 @@
 package com.mfdigital.apollo_users.core.http.controllers;
 
-import com.mfdigital.apollo_users.core.entity.User;
-import com.mfdigital.apollo_users.core.entity.enums.UserRole;
-import com.mfdigital.apollo_users.core.http.DTO.AuthDTO;
-import com.mfdigital.apollo_users.core.http.DTO.LoginResponseDTO;
-import com.mfdigital.apollo_users.core.http.DTO.RegisterDTO;
-import com.mfdigital.apollo_users.core.http.services.TokenService;
-import com.mfdigital.apollo_users.core.repositories.UserRepository;
-import jakarta.validation.Valid;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +14,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Optional;
+import com.mfdigital.apollo_users.core.entity.User;
+import com.mfdigital.apollo_users.core.entity.enums.UserRole;
+import com.mfdigital.apollo_users.core.http.DTO.AuthDTO;
+import com.mfdigital.apollo_users.core.http.DTO.LoginResponseDTO;
+import com.mfdigital.apollo_users.core.http.DTO.RegisterDTO;
+import com.mfdigital.apollo_users.core.http.config.UserEventPublisher;
+import com.mfdigital.apollo_users.core.http.services.TokenService;
+import com.mfdigital.apollo_users.core.repositories.UserRepository;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("auth")
@@ -33,6 +35,9 @@ public class AuthController {
     private UserRepository userRepository;
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private UserEventPublisher userEventPublisher;
 
 
     @PostMapping("/login")
@@ -78,6 +83,7 @@ public class AuthController {
         );
 
         this.userRepository.save(newUser);
+        userEventPublisher.publishUserCreated(newUser);
         return ResponseEntity.ok().build();
     }
 

@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.mfdigital.apollo_users.core.entity.User;
 
 public class UserEventPublisher {
-    
+
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
     @Autowired
     private TopicExchange userExchange;
 
-    public void publishAdminCreated(User user) {
+    public void publishUserCreated(User user) {
         rabbitTemplate.convertAndSend(userExchange.getName(), "user", user);
     }
 }
