@@ -47,11 +47,17 @@ public class AuthController {
             var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
             var auth = this.authenticationManager.authenticate(usernamePassword);
             var token = tokenService.generateToken((User) auth.getPrincipal());
-            return ResponseEntity.ok(new LoginResponseDTO(token,
+
+            LoginResponseDTO response = new LoginResponseDTO(
+                    token,
                     user.getUsername(),
                     user.getUserRole(),
                     user.getSector(),
-                    user.getState()));
+                    user.getState());
+
+            userEventPublisher.publishUserAuthorities(response);
+            return ResponseEntity.ok(response);
+
         } catch (AuthenticationException exception) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect or invalid credentials.");
         }
@@ -83,7 +89,6 @@ public class AuthController {
         );
 
         this.userRepository.save(newUser);
-        userEventPublisher.publishUserCreated(newUser);
         return ResponseEntity.ok().build();
     }
 
