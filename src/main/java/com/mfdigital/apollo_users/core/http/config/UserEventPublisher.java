@@ -18,10 +18,10 @@ public class UserEventPublisher {
     private TopicExchange userExchange;
 
     public void publishUserCreated(User user) {
-        rabbitTemplate.convertAndSend(userExchange.getName(), "user", user);
+        rabbitTemplate.convertAndSend(userExchange.getName(), "user.created", user);
     }
 
     public void publishUserAuthorities(LoginResponseDTO data){
-        rabbitTemplate.convertAndSend(userExchange.getName(), "user", data);
+        rabbitTemplate.convertAndSend(userExchange.getName(), "user.authorities", data);
     }
 }
