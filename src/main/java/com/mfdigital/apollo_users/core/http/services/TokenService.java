@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class TokenService {
@@ -19,10 +21,18 @@ public class TokenService {
 
     public String generateToken(User user) {
         try {
+            Map<String, String> userInfo = new HashMap<>();
+            
+            userInfo.put("name", user.getUsername());
+            userInfo.put("role", user.getUserRole().toString());
+            userInfo.put("email", user.getEmail());
+            userInfo.put("state", user.getState().toString());
+            userInfo.put("sector", user.getSector().toString());
+
             Algorithm algorithm = Algorithm.HMAC256(secretKey);
             return JWT.create()
                     .withIssuer("ApolloUsuario")
-                    .withSubject(user.getEmail())
+                    .withSubject(userInfo.toString())
                     .withExpiresAt(this.generateExpirationDate())
                     .sign(algorithm);
         } catch (JWTCreationException exception) {
