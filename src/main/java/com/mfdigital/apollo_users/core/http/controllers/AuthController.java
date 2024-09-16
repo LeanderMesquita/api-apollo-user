@@ -59,6 +59,7 @@ public class AuthController {
             LoginResponseRabbitmqDTO responseRabbitmq = new LoginResponseRabbitmqDTO(
                 token,
                 user.getUsername(),
+                user.getEmail(),
                 user.getUserRole(),
                 user.getSector(),
                 user.getState());

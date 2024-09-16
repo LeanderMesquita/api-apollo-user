@@ -6,21 +6,9 @@ import com.mfdigital.apollo_users.core.entity.enums.UserRole;
 
 public record LoginResponseRabbitmqDTO(
     String token, 
-    String username, 
+    String username,
+    String email,
     UserRole role, 
     Sector sector, 
     State state
-) {
-
-    public String getRoleJSON(){
-        return role.getRole();
-    }
-
-    public String getStateJSON(){
-        return state.getUf() + ", " + state.getDescription();
-    }
-
-    public String getSectorJSON(){
-        return sector.getSector();
-    }
-}
+) {}
