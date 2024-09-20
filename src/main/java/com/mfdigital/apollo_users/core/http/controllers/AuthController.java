@@ -18,6 +18,7 @@ import com.mfdigital.apollo_users.core.entity.User;
 import com.mfdigital.apollo_users.core.entity.enums.UserRole;
 import com.mfdigital.apollo_users.core.http.DTO.AuthDTO;
 import com.mfdigital.apollo_users.core.http.DTO.LoginResponseDTO;
+import com.mfdigital.apollo_users.core.http.DTO.LoginResponseRabbitmqDTO;
 import com.mfdigital.apollo_users.core.http.DTO.RegisterDTO;
 import com.mfdigital.apollo_users.core.http.config.UserEventPublisher;
 import com.mfdigital.apollo_users.core.http.services.TokenService;
@@ -55,7 +56,15 @@ public class AuthController {
                     user.getSector(),
                     user.getState());
 
-            userEventPublisher.publishUserAuthorities(response);
+            LoginResponseRabbitmqDTO responseRabbitmq = new LoginResponseRabbitmqDTO(
+                token,
+                user.getUsername(),
+                user.getEmail(),
+                user.getUserRole(),
+                user.getSector(),
+                user.getState());
+
+            userEventPublisher.publishUserAuthorities(responseRabbitmq);
             return ResponseEntity.ok(response);
 
         } catch (AuthenticationException exception) {
@@ -89,6 +98,7 @@ public class AuthController {
         );
 
         this.userRepository.save(newUser);
+        // userEventPublisher.publishUserCreated(newUser);
         return ResponseEntity.ok().build();
     }
 

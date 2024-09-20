@@ -1,6 +1,7 @@
 package com.mfdigital.apollo_users.core.http.config;
 
-import com.mfdigital.apollo_users.core.http.DTO.LoginResponseDTO;
+import com.mfdigital.apollo_users.core.http.DTO.LoginResponseRabbitmqDTO;
+
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,10 @@ public class UserEventPublisher {
     private TopicExchange userExchange;
 
     public void publishUserCreated(User user) {
-        rabbitTemplate.convertAndSend(userExchange.getName(), "user", user);
+        rabbitTemplate.convertAndSend(userExchange.getName(), "user.created", user);
     }
 
-    public void publishUserAuthorities(LoginResponseDTO data){
-        rabbitTemplate.convertAndSend(userExchange.getName(), "user", data);
+    public void publishUserAuthorities(LoginResponseRabbitmqDTO data){
+        rabbitTemplate.convertAndSend(userExchange.getName(), "user.authorities", data);
     }
 }
