@@ -1,7 +1,7 @@
 
 networks:
   apollo:
-    driver: bridge
+    external: true
 
 services:
   db_apollo_users:
