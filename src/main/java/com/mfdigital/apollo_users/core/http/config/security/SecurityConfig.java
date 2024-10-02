@@ -40,6 +40,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/users/update/{id}").hasAnyRole("ADMIN", "COORDINATOR", "SUPERVISOR")
                         .requestMatchers(HttpMethod.PATCH, "/users/update/{id}").hasAnyRole("ADMIN", "COORDINATOR", "SUPERVISOR")
                         .requestMatchers(HttpMethod.PATCH, "/users/status/{id}").hasAnyRole("ADMIN", "COORDINATOR")
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
