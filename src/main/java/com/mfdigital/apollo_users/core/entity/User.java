@@ -40,8 +40,6 @@ public class User implements UserDetails {
 
     @Setter
     private Boolean status;
-    @Setter
-    private Instant tma;
 
     @Setter
     @Enumerated(EnumType.STRING)
