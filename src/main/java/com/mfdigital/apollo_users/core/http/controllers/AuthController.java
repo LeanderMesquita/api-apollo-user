@@ -98,7 +98,6 @@ public class AuthController {
         );
 
         this.userRepository.save(newUser);
-        // userEventPublisher.publishUserCreated(newUser);
         return ResponseEntity.ok().build();
     }
 
