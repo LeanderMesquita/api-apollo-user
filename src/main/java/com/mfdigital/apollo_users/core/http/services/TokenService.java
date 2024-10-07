@@ -23,11 +23,7 @@ public class TokenService {
             return JWT.create()
                     .withIssuer("ApolloUsuario")
                     .withSubject(user.getEmail())
-                    .withClaim("name", user.getUsername())
-                    .withClaim("email", user.getEmail())
                     .withClaim("role", user.getUserRole().toString())
-                    .withClaim("sector", user.getSector().toString())
-                    .withClaim("state", user.getState().toString())
                     .withExpiresAt(this.generateExpirationDate())
                     .sign(algorithm);
         } catch (JWTCreationException exception) {
