@@ -17,6 +17,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.List;
 
@@ -76,7 +77,18 @@ public class User implements UserDetails {
         this.userRole = userRole;
         this.state = state;
         this.sector = sector;
-        this.status = true;
+        this.status = false;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = Instant.now().minus(3, ChronoUnit.HOURS);
+        this.updatedAt = Instant.now().minus(3, ChronoUnit.HOURS);
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = Instant.now().minus(3, ChronoUnit.HOURS);
     }
 
     @Override
