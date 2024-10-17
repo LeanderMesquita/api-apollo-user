@@ -44,9 +44,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "/update/{id}", method = {RequestMethod.PATCH, RequestMethod.PUT})
-    public ResponseEntity<User> updateProfile(@PathVariable String id, @RequestBody @Valid UserRequestDTO request) {
+    public ResponseEntity<UserResponseDTO> updateProfile(@PathVariable String id, @RequestBody @Valid UserRequestDTO request) {
         User updatedUser = userService.updateUser(id, request);
-        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+        return new ResponseEntity<>(new UserResponseDTO(updatedUser), HttpStatus.OK);
     }
 
     @PatchMapping("/status/{id}")
