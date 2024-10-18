@@ -50,8 +50,9 @@ public class UserController {
     }
 
     @PatchMapping("/status/{id}")
-    public ResponseEntity<User> inactivateUser (@PathVariable String id, @RequestBody @Valid UserStatusRequestDTO request) {
+    public ResponseEntity<?> inactivateUser (@PathVariable String id, @RequestBody @Valid UserStatusRequestDTO request) {
         User user = userService.inactivateUser(id, request);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(user.getUsername() + " user status was changed to " +
+                user.getStatus() + " on the " + user.getUpdatedAt(), HttpStatus.OK);
     }
 }
