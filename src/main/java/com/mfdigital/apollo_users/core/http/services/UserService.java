@@ -53,6 +53,7 @@ public class UserService {
         userToUpdate.setUserRole(userDetails.role());
         userToUpdate.setState(userDetails.state());
         userToUpdate.setSector(userDetails.sector());
+        userToUpdate.setStatus(userDetails.status());
 
         return userRepository.save(userToUpdate);
     }
