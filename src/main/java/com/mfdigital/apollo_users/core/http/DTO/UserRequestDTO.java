@@ -26,7 +26,6 @@ public record UserRequestDTO(
         Sector sector,
         @NotNull
         State state,
-        Instant tma,
         boolean status
 ) {
 }
