@@ -35,11 +35,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/users/view").hasAnyRole("ADMIN", "COORDINATOR", "SUPERVISOR")
+                        .requestMatchers(HttpMethod.GET, "/users/view").authenticated()
                         .requestMatchers(HttpMethod.GET, "/users/profile/{id}").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/users/update/{id}").hasAnyRole("ADMIN", "COORDINATOR", "SUPERVISOR")
                         .requestMatchers(HttpMethod.PATCH, "/users/update/{id}").hasAnyRole("ADMIN", "COORDINATOR", "SUPERVISOR")
-                        .requestMatchers(HttpMethod.PATCH, "/users/status/{id}").hasAnyRole("ADMIN", "COORDINATOR")
+                        .requestMatchers(HttpMethod.PATCH, "/users/status/{id}").hasAnyRole("ADMIN", "COORDINATOR", "SUPERVISOR")
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
