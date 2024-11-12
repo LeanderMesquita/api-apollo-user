@@ -1,5 +1,6 @@
 package com.mfdigital.apollo_users.core.http.controllers;
 
+import com.mfdigital.apollo_users.core.docs.UserDocs;
 import com.mfdigital.apollo_users.core.entity.User;
 import com.mfdigital.apollo_users.core.http.DTO.UserRequestDTO;
 import com.mfdigital.apollo_users.core.http.DTO.UserResponseDTO;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("users")
-public class UserController {
+public class UserController implements UserDocs {
 
     @Autowired
     private UserRepository userRepository;

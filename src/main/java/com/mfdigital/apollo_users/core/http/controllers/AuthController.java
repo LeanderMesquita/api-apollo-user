@@ -2,6 +2,7 @@ package com.mfdigital.apollo_users.core.http.controllers;
 
 import java.util.Optional;
 
+import com.mfdigital.apollo_users.core.docs.AuthDocs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("auth")
-public class AuthController {
+public class AuthController implements AuthDocs {
 
     @Autowired
     private TokenService tokenService;
