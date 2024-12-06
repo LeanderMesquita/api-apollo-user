@@ -53,6 +53,7 @@ public class AuthController implements AuthDocs {
             LoginResponseDTO response = new LoginResponseDTO(
                     token,
                     user.getUsername(),
+                    user.getEmail(),
                     user.getUserRole(),
                     user.getSector(),
                     user.getState());
