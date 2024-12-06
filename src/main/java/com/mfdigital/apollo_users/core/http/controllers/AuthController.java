@@ -6,6 +6,7 @@ import com.mfdigital.apollo_users.core.docs.AuthDocs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -46,6 +47,11 @@ public class AuthController implements AuthDocs {
     public ResponseEntity<?> login(@RequestBody @Valid AuthDTO data){
         try {
             User user = (User) userRepository.findByEmail(data.email());
+
+            if(!user.isEnabled()){
+                throw new AccessDeniedException("User is not activated.");
+            }
+
             var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
             var auth = this.authenticationManager.authenticate(usernamePassword);
             var token = tokenService.generateToken((User) auth.getPrincipal());
