@@ -4,6 +4,8 @@ package com.mfdigital.apollo_users.core.entity;
 import com.mfdigital.apollo_users.core.entity.enums.Sector;
 import com.mfdigital.apollo_users.core.entity.enums.State;
 import com.mfdigital.apollo_users.core.entity.enums.UserRole;
+import com.mfdigital.apollo_users.core.http.config.annotations.DisableDate;
+import com.mfdigital.apollo_users.core.http.config.listeners.DisableDateListener;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,13 +19,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.List;
 
 @Table(name = "users")
 @Entity(name = "users")
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners({AuditingEntityListener.class, DisableDateListener.class})
 @EqualsAndHashCode(of = "id")
 @Getter
 @NoArgsConstructor
@@ -61,6 +64,9 @@ public class User implements UserDetails {
     @LastModifiedDate
     @Column(nullable = false)
     private Instant updatedAt;
+
+    @DisableDate
+    private LocalDateTime disabledAt;
 
     public User (
             String name,

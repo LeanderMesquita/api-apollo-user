@@ -13,11 +13,11 @@ import java.time.Instant;
 
 public record UserRequestDTO(
         @NotBlank(message = "Name cannot be blank")
-        @Pattern(regexp = "^[A-Za-z]+$", message = "Please, enter your name correctly.")
+        @Pattern(regexp = "^[\\p{L}´`~^¨]+$", message = "Please, enter your name correctly.")
         String name,
 
         @NotBlank(message = "Last name cannot be blank")
-        @Pattern(regexp = "^[A-Za-z]+$", message = "Please, enter your last name correctly.")
+        @Pattern(regexp = "^[\\p{L}´`~^¨]+$", message = "Please, enter your name correctly.")
         String lastName,
 
         @NotNull
