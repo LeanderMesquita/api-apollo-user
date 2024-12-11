@@ -16,6 +16,8 @@ public class CorsConfig {
     private String allowedIp1;
     @Value("${allowed.ip2}")
     private String allowedIp2;
+    @Value("${allowed_ip3}")
+    private String allowedIp3;
 
     @Bean
     public CorsFilter corsFilter() {
