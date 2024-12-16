@@ -32,8 +32,7 @@ public class ValidatorService {
 
     public void sectorValidate(String sectorUpdateUser, String sectorAuthUser, String roleAuthUser){
 
-
-        if(!Objects.equals(sectorAuthUser, sectorUpdateUser) && !Objects.equals(roleAuthUser, "ADMIN")){
+        if(!Objects.equals(sectorAuthUser, sectorUpdateUser) && Objects.equals(roleAuthUser, "ADMIN")){
             throw new AccessDeniedException("You can only update users with the same sector");
         }
     }
@@ -41,7 +40,7 @@ public class ValidatorService {
     public void stateValidate(String stateUpdateUser, String stateAuthUser, String roleAuthUser){
 
         if(!Objects.equals(stateAuthUser, stateUpdateUser) && ((!Objects.equals(roleAuthUser, "ADMIN") || !Objects.equals(roleAuthUser, "COORDINATOR") ))){
-            throw new AccessDeniedException("You can only update users with the same sector");
+            throw new AccessDeniedException("You can only update users with the same state");
         }
     }
 
