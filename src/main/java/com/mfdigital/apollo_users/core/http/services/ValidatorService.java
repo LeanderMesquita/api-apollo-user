@@ -12,7 +12,7 @@ public class ValidatorService {
     public void roleValidate(String roleUpdateUser, String roleAuthUser){
 
         if(roleAuthUser.equals("COLLABORATOR")){
-            throw new AccessDeniedException("Collaborators cannot update others users");
+            throw new AccessDeniedException("Acesso negado.");
         }
 
         if (
@@ -21,26 +21,26 @@ public class ValidatorService {
                 (roleAuthUser.equals("COORDINATOR") || roleAuthUser.equals("SUPERVISOR"))
         )
         {
-            throw new AccessDeniedException("Coordinators or supervisor cannot update admin or coordinator users");
+            throw new AccessDeniedException("Coordenadores ou supervisores não possuem autorização para isso.");
         }
 
 
         if(roleUpdateUser.equals("SUPERVISOR") && roleAuthUser.equals("SUPERVISOR")){
-            throw new AccessDeniedException("Supervisors cannot update others supervisors");
+            throw new AccessDeniedException("Supervisores não possuem autorização para isso.");
         }
     }
 
     public void sectorValidate(String sectorUpdateUser, String sectorAuthUser, String roleAuthUser){
 
         if(!Objects.equals(sectorAuthUser, sectorUpdateUser) && Objects.equals(roleAuthUser, "ADMIN")){
-            throw new AccessDeniedException("You can only update users with the same sector");
+            throw new AccessDeniedException("Você só pode alterar um usuário do mesmo setor.");
         }
     }
 
     public void stateValidate(String stateUpdateUser, String stateAuthUser, String roleAuthUser){
 
         if(!Objects.equals(stateAuthUser, stateUpdateUser) && ((!Objects.equals(roleAuthUser, "ADMIN") || !Objects.equals(roleAuthUser, "COORDINATOR") ))){
-            throw new AccessDeniedException("You can only update users with the same state");
+            throw new AccessDeniedException("Você só pode alterar um usuário do mesmo estado.");
         }
     }
 
