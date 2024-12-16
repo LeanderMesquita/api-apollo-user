@@ -37,10 +37,10 @@ public class ExceptionHandler {
         Throwable mostSpecificCause = e.getMostSpecificCause();
         if (mostSpecificCause instanceof InvalidFormatException invalidFormatException) {
             String fieldName = invalidFormatException.getPath().getFirst().getFieldName();
-            String errorMessage = "Invalid value for field " + fieldName + ": " + invalidFormatException.getValue();
+            String errorMessage = "Valor inválido para o campo " + fieldName + ": " + invalidFormatException.getValue();
             errors.put(fieldName, errorMessage);
         } else {
-            errors.put("error", "Invalid request");
+            errors.put("error", "Requisição inválida");
         }
 
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);

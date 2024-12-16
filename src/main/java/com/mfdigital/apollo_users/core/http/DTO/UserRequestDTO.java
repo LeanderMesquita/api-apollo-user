@@ -12,12 +12,12 @@ import java.time.Instant;
 
 
 public record UserRequestDTO(
-        @NotBlank(message = "Name cannot be blank")
-        @Pattern(regexp = "^[\\p{L}´`~^¨]+$", message = "Please, enter your name correctly.")
+        @NotBlank(message = "Nome não pode ser vazio.")
+        @Pattern(regexp = "^[\\p{L}´`~^¨]+$", message = "Insira seu nome corretamente.")
         String name,
 
-        @NotBlank(message = "Last name cannot be blank")
-        @Pattern(regexp = "^[\\p{L}´`~^¨]+$", message = "Please, enter your name correctly.")
+        @NotBlank(message = "Sobrenome não pode ser vazio.")
+        @Pattern(regexp = "^[\\p{L}´`~^¨]+$", message = "Insira seu nome corretamente.")
         String lastName,
 
         @NotNull

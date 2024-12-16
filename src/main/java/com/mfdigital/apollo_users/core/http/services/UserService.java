@@ -33,7 +33,7 @@ public class UserService {
 
 
         User userToUpdate = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found."));
+                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado."));
 
         User authUserWhoRequestingChange = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -61,7 +61,7 @@ public class UserService {
     public User inactivateUser(String id, UserStatusRequestDTO userDetails) {
 
         User userToUpdate = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found."));
+                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado."));
 
         User authUserWhoRequestingChange = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         var roleAuthUser = authUserWhoRequestingChange.getUserRole().toString();

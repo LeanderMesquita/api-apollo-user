@@ -10,35 +10,35 @@ import jakarta.validation.constraints.Pattern;
 
 
 public record RegisterDTO(
-        @NotBlank(message = "Name cannot be blank")
+        @NotBlank(message = "Nome não pode ser vazio.")
         @Pattern(
-                regexp = "^[A-Za-z]+$", message = "Please, enter your name correctly."
+                regexp = "^[A-Za-z]+$", message = "Insira seu nome corretamente."
         )
         String name,
 
-        @NotBlank(message = "Last name cannot be blank")
-        @Pattern(regexp = "^[A-Za-z]+$", message = "Please, enter your last name correctly.")
+        @NotBlank(message = "Sobrenome não pode ser vazio.")
+        @Pattern(regexp = "^[A-Za-z]+$", message = "Insira seu sobrenome corretamente.")
         String lastName,
 
-        @NotBlank(message = "Email cannot be blank")
+        @NotBlank(message = "Email não pode ser vazio.")
         @Email
-        @Pattern(regexp = "^[A-Za-z0-9.]+@meirelesefreitas\\.adv\\.br$", message = "Email must be valid and end with '@meirelesefreitas.adv.br'")
+        @Pattern(regexp = "^[A-Za-z0-9.]+@meirelesefreitas\\.adv\\.br$", message = "Email inválido, Entre em contato com suporte.")
         String email,
 
-        @NotBlank(message = "Password cannot be blank")
+        @NotBlank(message = "Campo senha não pode ser vazio.")
         @Pattern(
                 regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%¨|&*()_+=;:?.^])[A-Za-z\\d!@#$%¨|&*()_+=;:?.^]{8,}$",
-                message = "Password must contain at least one lowercase character, one uppercase character, one special character, one number, and must be at least 8 characters long"
+                message = "A senha deve conter pelo menos um caractere minúsculo, um caractere maiúsculo, um caractere especial, um número e deve ter pelo menos 8 caracteres."
         )
         String password,
 
-        @NotNull(message = "Role cannot be null")
+        @NotNull(message = "Permissão não pode ser nula.")
         UserRole role,
 
-        @NotNull(message = "Sector cannot be null")
+        @NotNull(message = "Setor não pode ser nulo.")
         Sector sector,
 
-        @NotNull(message = "State cannot be null")
+        @NotNull(message = "Estado não pode ser nulo.")
         State state
 ) {
 }

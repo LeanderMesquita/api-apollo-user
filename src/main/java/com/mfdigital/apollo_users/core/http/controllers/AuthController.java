@@ -49,7 +49,7 @@ public class AuthController implements AuthDocs {
             User user = (User) userRepository.findByEmail(data.email());
 
             if(!user.isEnabled()){
-                throw new AccessDeniedException("User is not activated.");
+                throw new AccessDeniedException("Usuário inativo.");
             }
 
             var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
@@ -73,7 +73,7 @@ public class AuthController implements AuthDocs {
             return ResponseEntity.ok(response);
 
         } catch (AuthenticationException exception) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect or invalid credentials.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais incorretas ou inválidas.");
         }
 
     }
@@ -83,13 +83,13 @@ public class AuthController implements AuthDocs {
     public ResponseEntity<?> register(@RequestBody @Valid RegisterDTO data){
         var email = data.email();
         if(this.userRepository.findByEmail(email) != null)
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User with email " + email + " already exists");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email indisponível.");
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
 
         Optional<User> existingUserWithAdminRole = userRepository.findByUserRole(UserRole.ADMIN);
 
         if (existingUserWithAdminRole.isPresent() && data.role().toString().equals("ADMIN")) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Only one admin user is allowed on the system.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Não permitido.");
         }
 
         User newUser = new User(
