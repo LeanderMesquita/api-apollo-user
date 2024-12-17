@@ -11,13 +11,9 @@ import jakarta.validation.constraints.Pattern;
 
 public record RegisterDTO(
         @NotBlank(message = "Nome não pode ser vazio.")
-        @Pattern(
-                regexp = "^[A-Za-z]+$", message = "Insira seu nome corretamente."
-        )
         String name,
 
         @NotBlank(message = "Sobrenome não pode ser vazio.")
-        @Pattern(regexp = "^[A-Za-z]+$", message = "Insira seu sobrenome corretamente.")
         String lastName,
 
         @NotBlank(message = "Email não pode ser vazio.")

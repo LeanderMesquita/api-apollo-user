@@ -3,6 +3,7 @@ package com.mfdigital.apollo_users.core.http.controllers;
 import java.util.Optional;
 
 import com.mfdigital.apollo_users.core.docs.AuthDocs;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +47,8 @@ public class AuthController implements AuthDocs {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid AuthDTO data){
         try {
-            User user = (User) userRepository.findByEmail(data.email());
+            User user = (User) userRepository.findByEmail(data.email())
+                    .orElseThrow(() -> new EntityNotFoundException("Usuário não cadastrado."));
 
             if(!user.isEnabled()){
                 throw new AccessDeniedException("Usuário inativo.");
