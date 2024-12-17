@@ -47,8 +47,8 @@ public class AuthController implements AuthDocs {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid AuthDTO data){
         try {
-            User user = (User) userRepository.findByEmail(data.email())
-                    .orElseThrow(() -> new EntityNotFoundException("Usuário não cadastrado."));
+
+            User user = (User) userRepository.findByEmail(data.email());
 
             if(!user.isEnabled()){
                 throw new AccessDeniedException("Usuário inativo.");
@@ -76,6 +76,8 @@ public class AuthController implements AuthDocs {
 
         } catch (AuthenticationException exception) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais incorretas ou inválidas.");
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas.");
         }
 
     }
