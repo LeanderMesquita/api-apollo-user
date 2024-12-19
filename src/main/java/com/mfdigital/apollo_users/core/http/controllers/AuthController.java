@@ -3,7 +3,6 @@ package com.mfdigital.apollo_users.core.http.controllers;
 import java.util.Optional;
 
 import com.mfdigital.apollo_users.core.docs.AuthDocs;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +20,7 @@ import com.mfdigital.apollo_users.core.entity.User;
 import com.mfdigital.apollo_users.core.entity.enums.UserRole;
 import com.mfdigital.apollo_users.core.http.DTO.AuthDTO;
 import com.mfdigital.apollo_users.core.http.DTO.LoginResponseDTO;
-import com.mfdigital.apollo_users.core.http.DTO.LoginResponseRabbitmqDTO;
 import com.mfdigital.apollo_users.core.http.DTO.RegisterDTO;
-import com.mfdigital.apollo_users.core.http.config.UserEventPublisher;
 import com.mfdigital.apollo_users.core.http.services.TokenService;
 import com.mfdigital.apollo_users.core.repositories.UserRepository;
 
@@ -39,10 +36,6 @@ public class AuthController implements AuthDocs {
     private UserRepository userRepository;
     @Autowired
     private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private UserEventPublisher userEventPublisher;
-
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid AuthDTO data){
@@ -66,12 +59,6 @@ public class AuthController implements AuthDocs {
                     user.getSector(),
                     user.getState());
 
-            LoginResponseRabbitmqDTO responseRabbitmq = new LoginResponseRabbitmqDTO(
-                user.getUsername(),
-                user.getSector(),
-                user.getState());
-
-            userEventPublisher.publishUserAuthorities(responseRabbitmq);
             return ResponseEntity.ok(response);
 
         } catch (AuthenticationException exception) {
