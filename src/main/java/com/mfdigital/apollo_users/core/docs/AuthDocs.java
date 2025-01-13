@@ -25,7 +25,12 @@ public interface AuthDocs {
                                     name = "Exemplo de login",
                                     summary = "Exemplo de login de usuário",
                                     description = "Exemplo de um corpo de requisição para registrar um usuário",
-                                    value = "{\"email\": \"joaogomes@meirelesefreitas.adv.br\", \"password\": \"Joaozinho123!#\"}"
+                                    value = """
+                                            {
+                                                "email": "joaogomes@meirelesefreitas.adv.br",
+                                                "password": "Joaozinho123!#"
+                                            }
+                                            """
                             )
                     }
             )
@@ -43,7 +48,17 @@ public interface AuthDocs {
                                     name = "Exemplo de registro",
                                     summary = "Exemplo de register de usuário",
                                     description = "Exemplo de um corpo de requisição para registrar um usuário.",
-                                    value = "{\"name\": \"João\", \"lastName\": \"Silva\", \"role\": \"COLLABORATOR\", \"sector\": \"TRIAGE\", \"status\": \"true\"}"
+                                    value = """
+                                            {
+                                                 "name": "Pedro",
+                                                 "lastName": "santana",
+                                                 "email": "teste@meirelesefreitas.adv.br",
+                                                 "password": "Teste@123",
+                                                 "role": "COLABORADOR",
+                                                 "sector": "TRIAGEM",
+                                                 "state": "CE"
+                                            }
+                                            """
                             )
                     }
             )

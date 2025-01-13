@@ -35,7 +35,16 @@ public interface UserDocs {
                                     name = "Exemplo de atualização",
                                     summary = "Exemplo de update de usuário",
                                     description = "Exemplo de um corpo de requisição para atualizar um usuário.",
-                                    value = "{\"name\": \"João\", \"lastName\": \"Silva\", \"role\": \"COLLABORATOR\", \"sector\": \"TRIAGE\", \"state\": \"CE\", \"status\": true}"
+                                    value = """
+                                            {
+                                                "name": "Pedro",
+                                                "lastName": "Gustavo",
+                                                "role": "COORDENADOR",
+                                                "sector": "TRIAGEM",
+                                                "status": true,
+                                                "state": "CE"
+                                            }
+                                            """
                             )
                     }
             )
