@@ -67,4 +67,11 @@ public class ExceptionHandler {
         errors.put("error", "Credenciais incorretas ou inválidas.");
         return new ResponseEntity<>(errors, HttpStatus.UNAUTHORIZED);
     }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, String>> handleIllegalArgumentException(IllegalArgumentException e){
+        Map<String, String> errors = new HashMap<>();
+        errors.put("error", "Email já cadastrado.");
+        return new ResponseEntity<>(errors, HttpStatus.UNAUTHORIZED);
+    }
 }
