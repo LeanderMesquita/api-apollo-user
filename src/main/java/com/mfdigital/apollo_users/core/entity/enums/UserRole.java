@@ -4,8 +4,8 @@ import lombok.Getter;
 
 @Getter
 public enum UserRole {
-    COLLABORATOR ("Colaborador"),
-    COORDINATOR ("Coordenador"),
+    COLABORADOR ("Colaborador"),
+    COORDENADOR ("Coordenador"),
     SUPERVISOR("Supervisor"),
     ADMIN ("Administrador");
 

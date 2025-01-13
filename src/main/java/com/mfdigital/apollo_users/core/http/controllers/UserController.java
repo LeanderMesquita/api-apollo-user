@@ -25,7 +25,7 @@ public class UserController implements UserDocs {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/view")
+    @GetMapping
     public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
         List<User> users = userRepository.findAll();
 
@@ -36,7 +36,7 @@ public class UserController implements UserDocs {
         return new ResponseEntity<>(userResponseDTOs, HttpStatus.OK);
     }
 
-    @GetMapping("/profile/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<UserResponseDTO> getUserById(@PathVariable String id) {
 
         return userRepository.findById(id).map(user -> new ResponseEntity<>(new UserResponseDTO(user), HttpStatus.OK))
@@ -44,16 +44,15 @@ public class UserController implements UserDocs {
 
     }
 
-    @RequestMapping(value = "/update/{id}", method = {RequestMethod.PATCH, RequestMethod.PUT})
+    @PutMapping("/{id}")
     public ResponseEntity<UserResponseDTO> updateProfile(@PathVariable String id, @RequestBody @Valid UserRequestDTO request) {
         User updatedUser = userService.updateUser(id, request);
         return new ResponseEntity<>(new UserResponseDTO(updatedUser), HttpStatus.OK);
     }
 
-    @PatchMapping("/status/{id}")
-    public ResponseEntity<?> inactivateUser (@PathVariable String id, @RequestBody @Valid UserStatusRequestDTO request) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> inactivateUser (@PathVariable String id, @RequestBody @Valid UserStatusRequestDTO request) {
         User user = userService.inactivateUser(id, request);
-        return new ResponseEntity<>(user.getUsername() + " user status was changed to " +
-                user.getStatus() + " on the " + user.getUpdatedAt(), HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

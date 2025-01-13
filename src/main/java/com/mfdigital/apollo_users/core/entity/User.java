@@ -102,21 +102,21 @@ public class User implements UserDetails {
         return  switch (this.userRole){
             case ADMIN -> List.of(
                     new SimpleGrantedAuthority("ROLE_ADMIN"),
-                    new SimpleGrantedAuthority("ROLE_COORDINATOR"),
+                    new SimpleGrantedAuthority("ROLE_COORDENADOR"),
                     new SimpleGrantedAuthority("ROLE_SUPERVISOR"),
-                    new SimpleGrantedAuthority("ROLE_COLLABORATOR")
+                    new SimpleGrantedAuthority("ROLE_COLABORADOR")
             );
-            case COORDINATOR -> List.of(
-                    new SimpleGrantedAuthority("ROLE_COORDINATOR"),
+            case COORDENADOR -> List.of(
+                    new SimpleGrantedAuthority("ROLE_COORDENADOR"),
                     new SimpleGrantedAuthority("ROLE_SUPERVISOR"),
-                    new SimpleGrantedAuthority("ROLE_COLLABORATOR")
+                    new SimpleGrantedAuthority("ROLE_COLABORADOR")
             );
             case SUPERVISOR -> List.of(
                     new SimpleGrantedAuthority("ROLE_SUPERVISOR"),
-                    new SimpleGrantedAuthority("ROLE_COLLABORATOR")
+                    new SimpleGrantedAuthority("ROLE_COLABORADOR")
             );
-            case COLLABORATOR -> List.of(
-                    new SimpleGrantedAuthority("ROLE_COLLABORATOR")
+            case COLABORADOR -> List.of(
+                    new SimpleGrantedAuthority("ROLE_COLABORADOR")
             );
         };
 

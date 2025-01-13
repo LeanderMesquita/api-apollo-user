@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,10 +39,13 @@ public class AuthController implements AuthDocs {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @Valid AuthDTO data){
-        try {
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid AuthDTO data){
 
             User user = (User) userRepository.findByEmail(data.email());
+
+            if (user == null){
+                throw new AccessDeniedException("Usuário não registrado.");
+            }
 
             if(!user.isEnabled()){
                 throw new AccessDeniedException("Usuário inativo.");
@@ -59,28 +63,24 @@ public class AuthController implements AuthDocs {
                     user.getSector(),
                     user.getState());
 
-            return ResponseEntity.ok(response);
-
-        } catch (AuthenticationException exception) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais incorretas ou inválidas.");
-        } catch (Exception e){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas.");
-        }
+            return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
 
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody @Valid RegisterDTO data){
+    public ResponseEntity<Void> register(@RequestBody @Valid RegisterDTO data){
         var email = data.email();
-        if(this.userRepository.findByEmail(email) != null)
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email indisponível.");
+        if(this.userRepository.findByEmail(email) != null){
+            throw new IllegalArgumentException("Email já cadastrado.");
+        }
+
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
 
         Optional<User> existingUserWithAdminRole = userRepository.findByUserRole(UserRole.ADMIN);
 
         if (existingUserWithAdminRole.isPresent() && data.role().toString().equals("ADMIN")) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Não permitido.");
+            throw new AccessDeniedException("Não permitido.");
         }
 
         User newUser = new User(
@@ -94,7 +94,7 @@ public class AuthController implements AuthDocs {
         );
 
         this.userRepository.save(newUser);
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }
