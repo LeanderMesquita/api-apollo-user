@@ -1,5 +1,8 @@
 package com.mfdigital.apollo_users.core.docs;
 
+import com.mfdigital.apollo_users.core.entity.enums.Sector;
+import com.mfdigital.apollo_users.core.entity.enums.State;
+import com.mfdigital.apollo_users.core.entity.enums.UserRole;
 import com.mfdigital.apollo_users.core.http.DTO.UserRequestDTO;
 import com.mfdigital.apollo_users.core.http.DTO.UserResponseDTO;
 import com.mfdigital.apollo_users.core.http.DTO.UserStatusRequestDTO;
@@ -9,9 +12,11 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -19,7 +24,15 @@ import java.util.List;
 public interface UserDocs {
 
     @Operation(summary = "Retorna todos os usuários.", security = {@SecurityRequirement(name = "bearerAuth")})
-    ResponseEntity<List<UserResponseDTO>> getAllUsers();
+    ResponseEntity<Page<UserResponseDTO>> getAllUsers
+            (
+                    @RequestParam(defaultValue = "0") int page,
+                    @RequestParam(defaultValue = "25") int size,
+                    @RequestParam(required = false) Sector sector,
+                    @RequestParam(required = false) State state,
+                    @RequestParam(required = false) UserRole role,
+                    @RequestParam(required = false) String username
+            );
 
     @Operation(summary = "Retorna o usuário procurado pelo ID.", security = {@SecurityRequirement(name = "bearerAuth")})
     ResponseEntity<UserResponseDTO> getUserById(@PathVariable String id);

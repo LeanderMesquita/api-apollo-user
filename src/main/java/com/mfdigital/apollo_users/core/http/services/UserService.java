@@ -4,8 +4,11 @@ import com.mfdigital.apollo_users.core.entity.User;
 import com.mfdigital.apollo_users.core.http.DTO.UserRequestDTO;
 import com.mfdigital.apollo_users.core.http.DTO.UserStatusRequestDTO;
 import com.mfdigital.apollo_users.core.repositories.UserRepository;
+import com.mfdigital.apollo_users.core.repositories.specifications.UserSpecification;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +24,8 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public Page<User> getAllUsers(UserSpecification specification, Pageable pageable) {
+        return userRepository.findAll(specification, pageable);
     }
 
     public Optional<User> getUserById(String id) {
