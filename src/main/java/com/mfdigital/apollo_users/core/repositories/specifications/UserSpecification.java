@@ -21,12 +21,14 @@ public class UserSpecification implements Specification<User> {
     private final State state;
     private final UserRole role;
     private final String username;
+    private final Boolean status;
 
-    public UserSpecification(Sector sector, State state, UserRole role, String username) {
+    public UserSpecification(Sector sector, State state, UserRole role, String username, Boolean status) {
         this.sector = sector;
         this.state = state;
         this.role = role;
         this.username = username;
+        this.status = status;
     }
 
     @Override
@@ -44,7 +46,9 @@ public class UserSpecification implements Specification<User> {
         if(StringUtils.isNotEmpty(this.username)){
             predicates.add(criteriaBuilder.like(root.get("username"), "%"+this.username+"%"));
         }
-
+        if (Objects.nonNull(this.status)){
+            predicates.add(criteriaBuilder.equal(root.get("status"), this.status));
+        }
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
     }
 }

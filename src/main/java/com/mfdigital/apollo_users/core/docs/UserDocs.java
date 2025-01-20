@@ -28,7 +28,8 @@ public interface UserDocs {
                     @RequestParam(required = false) Sector sector,
                     @RequestParam(required = false) State state,
                     @RequestParam(required = false) UserRole role,
-                    @RequestParam(required = false) String username
+                    @RequestParam(required = false) String username,
+                    @RequestParam(required = false) Boolean status
             );
 
     @Operation(summary = "Retorna o usuário procurado pelo ID.", security = {@SecurityRequirement(name = "bearerAuth")})

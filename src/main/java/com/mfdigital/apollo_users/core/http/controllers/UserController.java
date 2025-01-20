@@ -37,11 +37,12 @@ public class UserController implements UserDocs {
             @RequestParam(required = false) Sector sector,
             @RequestParam(required = false) State state,
             @RequestParam(required = false) UserRole role,
-            @RequestParam(required = false) String username
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) Boolean status
     )
     {
         Pageable pageable = PageRequest.of(page, size);
-        UserSpecification specification = new UserSpecification(sector, state, role, username);
+        UserSpecification specification = new UserSpecification(sector, state, role, username, status);
 
 
         return new ResponseEntity<>(userService.getAllUsers(specification, pageable).map(UserResponseDTO::new), HttpStatus.OK);
