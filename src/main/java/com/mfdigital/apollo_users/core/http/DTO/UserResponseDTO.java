@@ -2,6 +2,7 @@ package com.mfdigital.apollo_users.core.http.DTO;
 
 import com.mfdigital.apollo_users.core.entity.User;
 import com.mfdigital.apollo_users.core.entity.enums.State;
+import java.time.LocalDateTime;
 
 public record UserResponseDTO(
         String id,
@@ -10,7 +11,10 @@ public record UserResponseDTO(
         String userRole,
         String sector,
         StateInfo state,
-        Boolean status) {
+        Boolean status,
+        LocalDateTime disableAt
+)
+{
 
 
     public record StateInfo(String uf, String description){
@@ -27,7 +31,8 @@ public record UserResponseDTO(
             user.getUserRole().getRole(),
             user.getSector().getSector(),
             new StateInfo(user.getState()),
-            user.getStatus()
+            user.getStatus(),
+            user.getDisabledAt()
         );
     }
 }

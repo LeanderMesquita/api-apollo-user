@@ -5,7 +5,6 @@ import com.mfdigital.apollo_users.core.entity.enums.State;
 import com.mfdigital.apollo_users.core.entity.enums.UserRole;
 import com.mfdigital.apollo_users.core.http.DTO.UserRequestDTO;
 import com.mfdigital.apollo_users.core.http.DTO.UserResponseDTO;
-import com.mfdigital.apollo_users.core.http.DTO.UserStatusRequestDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -17,8 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 @Tag(name = "Usuários")
 public interface UserDocs {
@@ -64,6 +61,4 @@ public interface UserDocs {
     )
     ResponseEntity<UserResponseDTO> updateProfile(@PathVariable String id, @RequestBody @Valid UserRequestDTO request);
 
-    @Operation(summary = "Inativa um usuário baseado pelo ID (Depreciado)", security = {@SecurityRequirement(name = "bearerAuth")})
-    ResponseEntity<?> inactivateUser (@PathVariable String id, @RequestBody @Valid UserStatusRequestDTO request);
 }

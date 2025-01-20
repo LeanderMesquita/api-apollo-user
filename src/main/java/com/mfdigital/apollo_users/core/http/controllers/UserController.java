@@ -7,7 +7,6 @@ import com.mfdigital.apollo_users.core.entity.enums.State;
 import com.mfdigital.apollo_users.core.entity.enums.UserRole;
 import com.mfdigital.apollo_users.core.http.DTO.UserRequestDTO;
 import com.mfdigital.apollo_users.core.http.DTO.UserResponseDTO;
-import com.mfdigital.apollo_users.core.http.DTO.UserStatusRequestDTO;
 import com.mfdigital.apollo_users.core.http.services.UserService;
 import com.mfdigital.apollo_users.core.repositories.UserRepository;
 import com.mfdigital.apollo_users.core.repositories.specifications.UserSpecification;
@@ -19,8 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("users")
@@ -64,9 +61,5 @@ public class UserController implements UserDocs {
         return new ResponseEntity<>(new UserResponseDTO(updatedUser), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> inactivateUser (@PathVariable String id, @RequestBody @Valid UserStatusRequestDTO request) {
-        User user = userService.inactivateUser(id, request);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+
 }
