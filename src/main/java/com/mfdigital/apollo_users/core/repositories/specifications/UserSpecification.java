@@ -44,7 +44,7 @@ public class UserSpecification implements Specification<User> {
             predicates.add(criteriaBuilder.equal(root.get("userRole"), this.role));
         }
         if(StringUtils.isNotEmpty(this.username)){
-            predicates.add(criteriaBuilder.like(root.get("username"), "%"+this.username+"%"));
+            predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("username")), "%"+this.username.toLowerCase()+"%"));
         }
         if (Objects.nonNull(this.status)){
             predicates.add(criteriaBuilder.equal(root.get("status"), this.status));
