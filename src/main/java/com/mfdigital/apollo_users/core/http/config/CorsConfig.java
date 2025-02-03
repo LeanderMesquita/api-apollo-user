@@ -16,6 +16,8 @@ public class CorsConfig {
     private String allowedIp1;
     @Value("${allowed.ip2}")
     private String allowedIp2;
+    @Value("${SPRING_PROFILES_ACTIVE}")
+    private String profile;
 
     @Bean
     public CorsFilter corsFilter() {
@@ -25,8 +27,12 @@ public class CorsConfig {
 
         log.info(allowedIp1);
         log.info(allowedIp2);
+        log.info(profile);
 
         config.setAllowCredentials(true);
+        if(profile.trim().equals("homolog")){
+            config.addAllowedOriginPattern("*");
+        }
         config.addAllowedOrigin(allowedIp1.trim());
         config.addAllowedOrigin(allowedIp2.trim());
         config.addAllowedHeader("*");
